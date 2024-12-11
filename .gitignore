@@ -1,0 +1,9 @@
+#**************************************************
+#**This file must be placed in your CCS workspace**
+#**************************************************
+Debug/
+.launches/
+.settings/
+.ccsproject
+.cproject
+.project
