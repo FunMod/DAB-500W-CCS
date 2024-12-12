@@ -1,0 +1,118 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/boards/TMDSCNCD280039C" --device "F28003x" --part "F28003x_100PZ" --package "100PZ" --context "system" --product "C2000WARE@5.04.00.00"
+ * @v2CliArgs --device "TMS320F280039C" --package "100PZ" --board "/boards/TMDSCNCD280039C" --context "system" --product "C2000WARE@5.04.00.00"
+ * @versions {"tool":"1.21.0+3721"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const epwm  = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1 = epwm.addInstance();
+const epwm2 = epwm.addInstance();
+const epwm3 = epwm.addInstance();
+const epwm4 = epwm.addInstance();
+const gpio  = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1 = gpio.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+epwm1.$name                                                      = "myEPWM0";
+epwm1.$hardware                                                  = system.deviceData.board.components.PWM_LOC1;
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                                        = 600;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 300;
+epwm1.epwmCounterCompare_cmpB                                    = 300;
+epwm1.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmDeadband_enableRED                                     = true;
+epwm1.epwmDeadband_enableFED                                     = true;
+epwm1.epwmDeadband_delayRED                                      = 12;
+epwm1.epwmDeadband_delayFED                                      = 12;
+epwm1.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_DISABLE";
+epwm1.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+
+epwm2.$name                                                      = "myEPWM1";
+epwm2.$hardware                                                  = system.deviceData.board.components.PWM_LOC2;
+epwm2.epwmTimebase_period                                        = 600;
+epwm2.epwmTimebase_phaseEnable                                   = true;
+epwm2.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm2.epwmCounterCompare_cmpA                                    = 300;
+epwm2.epwmCounterCompare_cmpB                                    = 300;
+epwm2.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm2.epwmDeadband_enableRED                                     = true;
+epwm2.epwmDeadband_enableFED                                     = true;
+epwm2.epwmDeadband_delayRED                                      = 12;
+epwm2.epwmDeadband_delayFED                                      = 12;
+epwm2.epwmTimebase_phaseShift                                    = 600;
+epwm2.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+
+epwm3.$name                                                      = "myEPWM2";
+epwm3.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm3.epwmTimebase_period                                        = 600;
+epwm3.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm3.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm3.epwmCounterCompare_cmpA                                    = 300;
+epwm3.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm3.epwmDeadband_enableRED                                     = true;
+epwm3.epwmDeadband_enableFED                                     = true;
+epwm3.epwmDeadband_delayRED                                      = 12;
+epwm3.epwmDeadband_delayFED                                      = 12;
+epwm3.$hardware                                                  = system.deviceData.board.components.PWM_LOC3;
+epwm3.epwmCounterCompare_cmpB                                    = 300;
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmTimebase_phaseEnable                                   = true;
+epwm3.epwmTimebase_phaseShift                                    = 50;
+
+epwm4.$name                                                      = "myEPWM3";
+epwm4.$hardware                                                  = system.deviceData.board.components.PWM_LOC4;
+epwm4.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm4.epwmTimebase_period                                        = 600;
+epwm4.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm4.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm4.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM3";
+epwm4.epwmTimebase_phaseEnable                                   = true;
+epwm4.epwmCounterCompare_cmpA                                    = 300;
+epwm4.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm4.epwmDeadband_enableRED                                     = true;
+epwm4.epwmDeadband_enableFED                                     = true;
+epwm4.epwmDeadband_delayRED                                      = 12;
+epwm4.epwmDeadband_delayFED                                      = 12;
+epwm4.epwmCounterCompare_cmpB                                    = 300;
+epwm4.epwmTimebase_phaseShift                                    = 600;
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+
+gpio1.$name             = "myGPIO0";
+gpio1.writeInitialValue = true;
+gpio1.initialValue      = 1;
+gpio1.direction         = "GPIO_DIR_MODE_OUT";
+gpio1.gpioPin.$assign   = "hsecDigital.58";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to FSI Header on the Control Card F280039C\\. Consider selecting it in \'use hardware\' above\\. @@@.+?@@@", gpio1, "gpioPin");
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.epwm.$suggestSolution           = "EPWM1";
+epwm1.epwm.epwm_aPin.$suggestSolution = "hsecDigital.49";
+epwm1.epwm.epwm_bPin.$suggestSolution = "hsecDigital.51";
+epwm2.epwm.$suggestSolution           = "EPWM2";
+epwm2.epwm.epwm_aPin.$suggestSolution = "hsecDigital.53";
+epwm2.epwm.epwm_bPin.$suggestSolution = "hsecDigital.55";
+epwm3.epwm.$suggestSolution           = "EPWM3";
+epwm3.epwm.epwm_aPin.$suggestSolution = "hsecDigital.50";
+epwm3.epwm.epwm_bPin.$suggestSolution = "hsecDigital.52";
+epwm4.epwm.$suggestSolution           = "EPWM4";
+epwm4.epwm.epwm_aPin.$suggestSolution = "hsecDigital.54";
+epwm4.epwm.epwm_bPin.$suggestSolution = "hsecDigital.56";

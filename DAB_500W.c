@@ -80,10 +80,20 @@ void main(void)
     Interrupt_initVectorTable();
 
     //
+    // Disable sync(Freeze clock to PWM as well)
+    //
+    SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
+
+    //
+    //
     // PinMux and Peripheral Initialization
     //
     Board_init();
 
+    //
+    // Enable sync and clock to PWM
+    //
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
     //
     // C2000Ware Library initialization
     //
