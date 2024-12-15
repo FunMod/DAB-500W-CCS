@@ -36,5 +36,96 @@
 
 void C2000Ware_libraries_init()
 {
+    HRPWM_SFO_init();
+    CONTROLLER_init();
+}
+
+
+//
+// HRWPM SFO Global Variables
+//
+int MEP_ScaleFactor; // Global variable used by the SFO library
+                     // Result can be used for all HRPWM channels
+                     // This variable is also copied to HRMSTEP
+                     // register by SFO() function.
+
+
+volatile uint32_t ePWM[] = {EPWM1_BASE,EPWM2_BASE,EPWM3_BASE,EPWM4_BASE,EPWM5_BASE,EPWM6_BASE,EPWM7_BASE,EPWM8_BASE};
+
+
+
+// Initialization Function
+void mySFO0_init(){
+    //
+    // Calling SFO() updates the HRMSTEP register with calibrated MEP_ScaleFactor.
+    // HRMSTEP must be populated with a scale factor value prior to enabling
+    // high resolution period control.
+    //
+    uint16_t status;
+    status = SFO();
+    while(status == SFO_INCOMPLETE)
+    {
+        status = SFO();
+        if(status == SFO_ERROR)
+        {
+            ESTOP0;   // SFO function returns 2 if an error occurs & # of MEP
+        }              // steps/coarse step exceeds maximum of 255.
+    }
+} 
+
+// Run-Time Function Call
+void mySFO0_runtime(){
+     //
+     // Call the scale factor optimizer lib function SFO()
+     // periodically to track for any change due to temp/voltage.
+     // This function generates MEP_ScaleFactor by running the
+     // MEP calibration module in the HRPWM logic. This scale
+     // factor can be used for all HRPWM channels. The SFO()
+     // function also updates the HRMSTEP register with the
+     // scale factor value.
+     //
+     uint16_t status;
+     status = SFO(); // in background, MEP calibration module
+                     // continuously updates MEP_ScaleFactor
+
+     if (status == SFO_ERROR)
+     {
+         ESTOP0;   // SFO function returns 2 if an error occurs & #
+                    // of MEP steps/coarse step
+     }              // exceeds maximum of 255.
+} 
+
+void HRPWM_SFO_init(){
+    mySFO0_init();       
+}
+
+
+//
+// DCL CONTROLLER
+//
+//
+// PI_CONTROLLER variables
+//
+DCL_PI PI_CONTROLLER = PI_DEFAULTS;
+DCL_PI_SPS PI_CONTROLLER_sps = PI_SPS_DEFAULTS;
+DCL_CSS PI_CONTROLLER_css = DCL_CSS_DEFAULTS;
+void PI_CONTROLLER_init(){
+    //
+    // PI_CONTROLLER settings
+    //
+    PI_CONTROLLER.sps = &PI_CONTROLLER_sps;
+    PI_CONTROLLER.css = &PI_CONTROLLER_css;
+    PI_CONTROLLER.Kp = 1.0f;
+    PI_CONTROLLER.Ki = 0.0f;
+    PI_CONTROLLER.i10 = 0.0f;
+    PI_CONTROLLER.Umax = 1.0f;
+    PI_CONTROLLER.Umin = -1.0f;
+    PI_CONTROLLER.i6 = 1.0f;
+    PI_CONTROLLER.i11 = 0.0f;
+    PI_CONTROLLER.Imax = 1.0f;
+    PI_CONTROLLER.Imin = -1.0f;
+}
+void CONTROLLER_init(){
+    PI_CONTROLLER_init();
 }
 

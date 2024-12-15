@@ -9,13 +9,17 @@
 /**
  * Import the modules used in this configuration.
  */
-const epwm  = scripting.addModule("/driverlib/epwm.js", {}, false);
-const epwm1 = epwm.addInstance();
-const epwm2 = epwm.addInstance();
-const epwm3 = epwm.addInstance();
-const epwm4 = epwm.addInstance();
-const gpio  = scripting.addModule("/driverlib/gpio.js", {}, false);
-const gpio1 = gpio.addInstance();
+const epwm        = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1       = epwm.addInstance();
+const epwm2       = epwm.addInstance();
+const epwm3       = epwm.addInstance();
+const epwm4       = epwm.addInstance();
+const gpio        = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1       = gpio.addInstance();
+const sfo         = scripting.addModule("/libraries/calibration/hrpwm/sfo.js", {}, false);
+const sfo1        = sfo.addInstance();
+const controller  = scripting.addModule("/libraries/control/dcl/controller.js", {}, false);
+const controller1 = controller.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -130,6 +134,11 @@ gpio1.initialValue      = 1;
 gpio1.direction         = "GPIO_DIR_MODE_OUT";
 gpio1.gpioPin.$assign   = "hsecDigital.58";
 scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to FSI Header on the Control Card F280039C\\. Consider selecting it in \'use hardware\' above\\. @@@.+?@@@", gpio1, "gpioPin");
+
+sfo1.$name = "mySFO0";
+
+controller1.$name            = "PI_CONTROLLER";
+controller1.controllerChoice = "PI";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

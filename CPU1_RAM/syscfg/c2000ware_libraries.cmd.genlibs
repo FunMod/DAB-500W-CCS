@@ -18,3 +18,5 @@
  *                TI C/C++ toolchain
  */
 
+/* libraries required for /libraries/calibration/hrpwm */
+-l"libraries/calibration/hrpwm/f28003x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib"

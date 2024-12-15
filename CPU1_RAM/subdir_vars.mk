@@ -12,13 +12,29 @@ SYSCFG_SRCS += \
 ../c2000.syscfg 
 
 LIB_SRCS += \
-D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib \
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib 
+
+ASM_SRCS += \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_clamp_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF11_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF13_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF13_C2C3.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF22_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF22_C2C3.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF23_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF23_C2C3.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_futils.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C4.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C7.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C1.asm \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C4.asm 
 
 C_SRCS += \
 ../DAB_500W.c \
 ./syscfg/board.c \
-./syscfg/c2000ware_libraries.c 
+./syscfg/c2000ware_libraries.c \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c 
 
 GEN_FILES += \
 ./syscfg/board.c \
@@ -32,7 +48,8 @@ GEN_MISC_DIRS += \
 C_DEPS += \
 ./DAB_500W.d \
 ./syscfg/board.d \
-./syscfg/c2000ware_libraries.d 
+./syscfg/c2000ware_libraries.d \
+./DCL_error.d 
 
 GEN_OPTS += \
 ./syscfg/board.opt \
@@ -41,7 +58,38 @@ GEN_OPTS += \
 OBJS += \
 ./DAB_500W.obj \
 ./syscfg/board.obj \
-./syscfg/c2000ware_libraries.obj 
+./syscfg/c2000ware_libraries.obj \
+./DCL_clamp_C1.obj \
+./DCL_DF11_C1.obj \
+./DCL_DF13_C1.obj \
+./DCL_DF13_C2C3.obj \
+./DCL_DF22_C1.obj \
+./DCL_DF22_C2C3.obj \
+./DCL_DF23_C1.obj \
+./DCL_DF23_C2C3.obj \
+./DCL_error.obj \
+./DCL_futils.obj \
+./DCL_PI_C1.obj \
+./DCL_PI_C4.obj \
+./DCL_PI_C7.obj \
+./DCL_PID_C1.obj \
+./DCL_PID_C4.obj 
+
+ASM_DEPS += \
+./DCL_clamp_C1.d \
+./DCL_DF11_C1.d \
+./DCL_DF13_C1.d \
+./DCL_DF13_C2C3.d \
+./DCL_DF22_C1.d \
+./DCL_DF22_C2C3.d \
+./DCL_DF23_C1.d \
+./DCL_DF23_C2C3.d \
+./DCL_futils.d \
+./DCL_PI_C1.d \
+./DCL_PI_C4.d \
+./DCL_PI_C7.d \
+./DCL_PID_C1.d \
+./DCL_PID_C4.d 
 
 GEN_MISC_FILES += \
 ./syscfg/board.h \
@@ -59,7 +107,22 @@ GEN_MISC_DIRS__QUOTED += \
 OBJS__QUOTED += \
 "DAB_500W.obj" \
 "syscfg\board.obj" \
-"syscfg\c2000ware_libraries.obj" 
+"syscfg\c2000ware_libraries.obj" \
+"DCL_clamp_C1.obj" \
+"DCL_DF11_C1.obj" \
+"DCL_DF13_C1.obj" \
+"DCL_DF13_C2C3.obj" \
+"DCL_DF22_C1.obj" \
+"DCL_DF22_C2C3.obj" \
+"DCL_DF23_C1.obj" \
+"DCL_DF23_C2C3.obj" \
+"DCL_error.obj" \
+"DCL_futils.obj" \
+"DCL_PI_C1.obj" \
+"DCL_PI_C4.obj" \
+"DCL_PI_C7.obj" \
+"DCL_PID_C1.obj" \
+"DCL_PID_C4.obj" 
 
 GEN_MISC_FILES__QUOTED += \
 "syscfg\board.h" \
@@ -74,7 +137,8 @@ GEN_MISC_FILES__QUOTED += \
 C_DEPS__QUOTED += \
 "DAB_500W.d" \
 "syscfg\board.d" \
-"syscfg\c2000ware_libraries.d" 
+"syscfg\c2000ware_libraries.d" \
+"DCL_error.d" 
 
 GEN_FILES__QUOTED += \
 "syscfg\board.c" \
@@ -82,12 +146,45 @@ GEN_FILES__QUOTED += \
 "syscfg\c2000ware_libraries.opt" \
 "syscfg\c2000ware_libraries.c" 
 
+ASM_DEPS__QUOTED += \
+"DCL_clamp_C1.d" \
+"DCL_DF11_C1.d" \
+"DCL_DF13_C1.d" \
+"DCL_DF13_C2C3.d" \
+"DCL_DF22_C1.d" \
+"DCL_DF22_C2C3.d" \
+"DCL_DF23_C1.d" \
+"DCL_DF23_C2C3.d" \
+"DCL_futils.d" \
+"DCL_PI_C1.d" \
+"DCL_PI_C4.d" \
+"DCL_PI_C7.d" \
+"DCL_PID_C1.d" \
+"DCL_PID_C4.d" 
+
 C_SRCS__QUOTED += \
 "../DAB_500W.c" \
 "./syscfg/board.c" \
-"./syscfg/c2000ware_libraries.c" 
+"./syscfg/c2000ware_libraries.c" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c" 
 
 SYSCFG_SRCS__QUOTED += \
 "../c2000.syscfg" 
+
+ASM_SRCS__QUOTED += \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_clamp_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF11_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF13_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF13_C2C3.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF22_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF22_C2C3.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF23_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF23_C2C3.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_futils.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C4.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C7.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C1.asm" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C4.asm" 
 
 

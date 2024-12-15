@@ -107,6 +107,15 @@ syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f2800
 syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h
 syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h
 syscfg/c2000ware_libraries.obj: D:/ti/workspace/DAB_500W/device/device.h
+syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCL.h
+syscfg/c2000ware_libraries.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/complex.h
+syscfg/c2000ware_libraries.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/math.h
+syscfg/c2000ware_libraries.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_defs.h
+syscfg/c2000ware_libraries.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_limits.h
+syscfg/c2000ware_libraries.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlib.h
+syscfg/c2000ware_libraries.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlibf.h
+syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCLF32.h
+syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/SFO_V8.h
 
 syscfg/c2000ware_libraries.c:
 
@@ -321,4 +330,22 @@ D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h:
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h:
 
 D:/ti/workspace/DAB_500W/device/device.h:
+
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCL.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/complex.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/math.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_defs.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_limits.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlib.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlibf.h:
+
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCLF32.h:
+
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/SFO_V8.h:
 

@@ -51,7 +51,6 @@
 #include "device.h"
 #include "board.h"
 #include "c2000ware_libraries.h"
-#include "sfo_v8.h"
 //
 // Defines
 //
@@ -72,25 +71,16 @@
 //
 float32_t dutyFine=0.0;
 float32_t previousDutyFine=0.0;
-uint16_t status;
 float32_t DAB_pwmPhaseShift_P1_S1_ns;
-
 int32_t DAB_pwmPhaseShift_P1_S1_ticks;
 uint16_t DAB_pwmPhaseShiftP1_S1_HiResticks;
 uint16_t DAB_phaseSyncP1_S1CountDirection;
 float32_t Phase_pu;
 uint32_t HR_Phase_ticks;
-int MEP_ScaleFactor; // Global variable used by the SFO library
-                     // Result can be used for all HRPWM channels
-                     // This variable is also copied to HRMSTEP
-                     // register by SFO() function.
 
-volatile uint32_t ePWM[] =
-    {0, myEPWM2_BASE, myEPWM3_BASE};
 //
 // Function Prototypes
 //
-void error(void);
 uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPrimSec_pu);
 //
 // Main
@@ -118,20 +108,6 @@ void main(void)
     // Service Routines (ISR).
     //
     Interrupt_initVectorTable();
-
-    //
-    // Calling SFO() updates the HRMSTEP register with calibrated MEP_ScaleFactor.
-    // HRMSTEP must be populated with a scale factor value prior to enabling
-    // high resolution period control.
-    //
-    while(status == SFO_INCOMPLETE)
-    {
-        status = SFO();
-        if(status == SFO_ERROR)
-        {
-            error();   // SFO function returns 2 if an error occurs & # of MEP
-        }              // steps/coarse step exceeds maximum of 255.
-    }
 
     //
     // Disable sync(Freeze clock to PWM as well)
@@ -177,14 +153,6 @@ void main(void)
 
             previousDutyFine = dutyFine;
         }
-        status = SFO(); // in background, MEP calibration module
-                        // continuously updates MEP_ScaleFactor
-
-        if (status == SFO_ERROR)
-        {
-            error();   // SFO function returns 2 if an error occurs & #
-                       // of MEP steps/coarse step
-        }              // exceeds maximum of 255.
     }
 }
 
@@ -235,10 +203,7 @@ uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPr
     return (uint32_t)DAB_pwmPhaseShift_P1_S1_ticks;
 
 }
-void error (void)
-{
-    ESTOP0;         // Stop here and handle error
-}
+
 
 //
 // End of File

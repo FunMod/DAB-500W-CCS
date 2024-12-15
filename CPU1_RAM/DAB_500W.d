@@ -107,7 +107,15 @@ DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/drive
 DAB_500W.obj: D:/ti/workspace/DAB_500W/device/device.h
 DAB_500W.obj: syscfg/board.h
 DAB_500W.obj: syscfg/c2000ware_libraries.h
-DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/sfo_v8.h
+DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCL.h
+DAB_500W.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/complex.h
+DAB_500W.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/math.h
+DAB_500W.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_defs.h
+DAB_500W.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_limits.h
+DAB_500W.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlib.h
+DAB_500W.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlibf.h
+DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCLF32.h
+DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/SFO_V8.h
 
 ../DAB_500W.c:
 
@@ -323,5 +331,21 @@ syscfg/board.h:
 
 syscfg/c2000ware_libraries.h:
 
-D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/sfo_v8.h:
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCL.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/complex.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/math.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_defs.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_limits.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlib.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdlibf.h:
+
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/include/DCLF32.h:
+
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/SFO_V8.h:
 

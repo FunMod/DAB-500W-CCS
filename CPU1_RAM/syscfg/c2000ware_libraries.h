@@ -46,8 +46,33 @@ extern "C"
 #endif
 
 #include "board.h"
+#include "DCL.h"
+#include "DCLF32.h"
+
+#include <SFO_V8.h>
+
+extern int MEP_ScaleFactor;
+extern volatile uint32_t ePWM[];
+
+void mySFO0_runtime();
+void mySFO0_init();
+
+//
+// CONTROLLER
+//
+//
+// PI_CONTROLLER variables
+//
+extern DCL_PI PI_CONTROLLER;
+//
+// CONTROLLER functions
+//
+void PI_CONTROLLER_init();
 
 
+
+void HRPWM_SFO_init();
+void CONTROLLER_init();
 void C2000Ware_libraries_init();
 
 //*****************************************************************************

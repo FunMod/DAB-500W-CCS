@@ -13,10 +13,24 @@ ORDERED_OBJS += \
 "./DAB_500W.obj" \
 "./syscfg/board.obj" \
 "./syscfg/c2000ware_libraries.obj" \
+"./DCL_clamp_C1.obj" \
+"./DCL_DF11_C1.obj" \
+"./DCL_DF13_C1.obj" \
+"./DCL_DF13_C2C3.obj" \
+"./DCL_DF22_C1.obj" \
+"./DCL_DF22_C2C3.obj" \
+"./DCL_DF23_C1.obj" \
+"./DCL_DF23_C2C3.obj" \
+"./DCL_error.obj" \
+"./DCL_futils.obj" \
+"./DCL_PI_C1.obj" \
+"./DCL_PI_C4.obj" \
+"./DCL_PI_C7.obj" \
+"./DCL_PID_C1.obj" \
+"./DCL_PID_C4.obj" \
 "./device/device.obj" \
 "./device/f28003x_codestartbranch.obj" \
 "../28003x_generic_ram_lnk.cmd" \
-"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -lc2000ware_libraries.cmd.genlibs \
@@ -151,9 +165,9 @@ DAB_500W.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "DAB_500W.obj" "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "device\device.obj" "device\f28003x_codestartbranch.obj" 
-	-$(RM) "DAB_500W.d" "syscfg\board.d" "syscfg\c2000ware_libraries.d" "device\device.d" 
-	-$(RM) "device\f28003x_codestartbranch.d" 
+	-$(RM) "DAB_500W.obj" "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "DCL_clamp_C1.obj" "DCL_DF11_C1.obj" "DCL_DF13_C1.obj" "DCL_DF13_C2C3.obj" "DCL_DF22_C1.obj" "DCL_DF22_C2C3.obj" "DCL_DF23_C1.obj" "DCL_DF23_C2C3.obj" "DCL_error.obj" "DCL_futils.obj" "DCL_PI_C1.obj" "DCL_PI_C4.obj" "DCL_PI_C7.obj" "DCL_PID_C1.obj" "DCL_PID_C4.obj" "device\device.obj" "device\f28003x_codestartbranch.obj" 
+	-$(RM) "DAB_500W.d" "syscfg\board.d" "syscfg\c2000ware_libraries.d" "DCL_error.d" "device\device.d" 
+	-$(RM) "DCL_clamp_C1.d" "DCL_DF11_C1.d" "DCL_DF13_C1.d" "DCL_DF13_C2C3.d" "DCL_DF22_C1.d" "DCL_DF22_C2C3.d" "DCL_DF23_C1.d" "DCL_DF23_C2C3.d" "DCL_futils.d" "DCL_PI_C1.d" "DCL_PI_C4.d" "DCL_PI_C7.d" "DCL_PID_C1.d" "DCL_PID_C4.d" "device\f28003x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '
