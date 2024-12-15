@@ -147,7 +147,7 @@ extern "C"
 #define myEPWM1_BASE EPWM2_BASE
 #define myEPWM1_TBPRD 600
 #define myEPWM1_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM1_TBPHS 600
+#define myEPWM1_TBPHS 598
 #define myEPWM1_CMPA 300
 #define myEPWM1_CMPB 300
 #define myEPWM1_CMPC 0
@@ -160,7 +160,7 @@ extern "C"
 #define myEPWM2_BASE EPWM3_BASE
 #define myEPWM2_TBPRD 600
 #define myEPWM2_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM2_TBPHS 50
+#define myEPWM2_TBPHS 0
 #define myEPWM2_CMPA 300
 #define myEPWM2_CMPB 300
 #define myEPWM2_CMPC 0
@@ -173,7 +173,7 @@ extern "C"
 #define myEPWM3_BASE EPWM4_BASE
 #define myEPWM3_TBPRD 600
 #define myEPWM3_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM3_TBPHS 600
+#define myEPWM3_TBPHS 0
 #define myEPWM3_CMPA 300
 #define myEPWM3_CMPB 300
 #define myEPWM3_CMPC 0

@@ -16,6 +16,7 @@ ORDERED_OBJS += \
 "./device/device.obj" \
 "./device/f28003x_codestartbranch.obj" \
 "../28003x_generic_ram_lnk.cmd" \
+"D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib" \
 $(GEN_CMDS__FLAG) \
 -lc2000ware_libraries.cmd.genlibs \

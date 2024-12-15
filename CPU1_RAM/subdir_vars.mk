@@ -12,6 +12,7 @@ SYSCFG_SRCS += \
 ../c2000.syscfg 
 
 LIB_SRCS += \
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/lib/SFO_v8_fpu_lib_build_c28_driverlib.lib \
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib 
 
 C_SRCS += \

@@ -107,6 +107,7 @@ DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/drive
 DAB_500W.obj: D:/ti/workspace/DAB_500W/device/device.h
 DAB_500W.obj: syscfg/board.h
 DAB_500W.obj: syscfg/c2000ware_libraries.h
+DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/sfo_v8.h
 
 ../DAB_500W.c:
 
@@ -321,4 +322,6 @@ D:/ti/workspace/DAB_500W/device/device.h:
 syscfg/board.h:
 
 syscfg/c2000ware_libraries.h:
+
+D:/ti/c2000/C2000Ware_5_04_00_00/libraries/calibration/hrpwm/f28003x/include/sfo_v8.h:
 

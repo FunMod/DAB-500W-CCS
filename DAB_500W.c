@@ -51,7 +51,47 @@
 #include "device.h"
 #include "board.h"
 #include "c2000ware_libraries.h"
+#include "sfo_v8.h"
+//
+// Defines
+//
+#ifndef ONE_NANO_SEC
+#define ONE_NANO_SEC ((float32_t)0.000000001)
+#endif
+#ifndef TWO_RAISED_TO_THE_POWER_SIXTEEN
+#define TWO_RAISED_TO_THE_POWER_SIXTEEN ((float32_t)65536.0)
+#endif
+#ifndef TWO_RAISED_TO_THE_POWER_EIGHT
+#define TWO_RAISED_TO_THE_POWER_EIGHT ((float32_t)256.0)
+#endif
+#define DAB_PWMSYSCLOCK_FREQ_HZ   ((float32_t)120*1000000)
+#define DAB_pwmFrequency_Hz ((float32_t)100*1000)
 
+//
+// Globals
+//
+float32_t dutyFine=0.0;
+float32_t previousDutyFine=0.0;
+uint16_t status;
+float32_t DAB_pwmPhaseShift_P1_S1_ns;
+
+int32_t DAB_pwmPhaseShift_P1_S1_ticks;
+uint16_t DAB_pwmPhaseShiftP1_S1_HiResticks;
+uint16_t DAB_phaseSyncP1_S1CountDirection;
+float32_t Phase_pu;
+uint32_t HR_Phase_ticks;
+int MEP_ScaleFactor; // Global variable used by the SFO library
+                     // Result can be used for all HRPWM channels
+                     // This variable is also copied to HRMSTEP
+                     // register by SFO() function.
+
+volatile uint32_t ePWM[] =
+    {0, myEPWM2_BASE, myEPWM3_BASE};
+//
+// Function Prototypes
+//
+void error(void);
+uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPrimSec_pu);
 //
 // Main
 //
@@ -78,6 +118,20 @@ void main(void)
     // Service Routines (ISR).
     //
     Interrupt_initVectorTable();
+
+    //
+    // Calling SFO() updates the HRMSTEP register with calibrated MEP_ScaleFactor.
+    // HRMSTEP must be populated with a scale factor value prior to enabling
+    // high resolution period control.
+    //
+    while(status == SFO_INCOMPLETE)
+    {
+        status = SFO();
+        if(status == SFO_ERROR)
+        {
+            error();   // SFO function returns 2 if an error occurs & # of MEP
+        }              // steps/coarse step exceeds maximum of 255.
+    }
 
     //
     // Disable sync(Freeze clock to PWM as well)
@@ -107,8 +161,83 @@ void main(void)
 
     while(1)
     {
-        
+        if (dutyFine != previousDutyFine)
+        {
+
+            Phase_pu = dutyFine;
+            HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(Phase_pu);
+            HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+            HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+            HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
+            HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
+            EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+            HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+            EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+            HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+
+            previousDutyFine = dutyFine;
+        }
+        status = SFO(); // in background, MEP calibration module
+                        // continuously updates MEP_ScaleFactor
+
+        if (status == SFO_ERROR)
+        {
+            error();   // SFO function returns 2 if an error occurs & #
+                       // of MEP steps/coarse step
+        }              // exceeds maximum of 255.
     }
+}
+
+uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPrimSec_pu)
+{
+    //
+    // first the phase shift in pu is converter to ns
+    // this is done for better debug and user friendliness
+    //
+    DAB_pwmPhaseShift_P1_S1_ns = DAB_pwmPhaseShiftPrimSec_pu *
+            ((float32_t)1.0 / DAB_pwmFrequency_Hz) *
+            (1 / ONE_NANO_SEC);
+
+    //
+    // next this ns is simply converted to ticks
+    //
+    DAB_pwmPhaseShift_P1_S1_ticks =
+            (int32_t)((float32_t)DAB_pwmPhaseShift_P1_S1_ns *
+                    DAB_PWMSYSCLOCK_FREQ_HZ * ONE_NANO_SEC *
+                    TWO_RAISED_TO_THE_POWER_EIGHT) - ((int32_t)2 << 8);
+    //
+    // due to the delay line implementation depending on whether it is
+    // a phase delay or an advance we need to adjust the
+    // HR phase shift ticks calculations
+    //
+    if(DAB_pwmPhaseShift_P1_S1_ticks >= 0)
+    {
+        DAB_phaseSyncP1_S1CountDirection = EPWM_COUNT_MODE_DOWN_AFTER_SYNC;
+
+        //
+        // DAB_pwmPhaseShiftPrimSec_ticks has the correct value already
+        //
+    }
+    else
+    {
+        DAB_phaseSyncP1_S1CountDirection =  EPWM_COUNT_MODE_UP_AFTER_SYNC;
+        DAB_pwmPhaseShift_P1_S1_ticks = DAB_pwmPhaseShift_P1_S1_ticks * -1;
+
+        DAB_pwmPhaseShiftP1_S1_HiResticks =  ((uint16_t) 0xFF - ((uint16_t)
+                (DAB_pwmPhaseShift_P1_S1_ticks & 0x0000FF)));
+
+        DAB_pwmPhaseShift_P1_S1_ticks =
+                ((DAB_pwmPhaseShift_P1_S1_ticks & 0xFFFF00) + 0x100) +
+                DAB_pwmPhaseShiftP1_S1_HiResticks;
+
+    }
+
+    return (uint32_t)DAB_pwmPhaseShift_P1_S1_ticks;
+
+}
+void error (void)
+{
+    ESTOP0;         // Stop here and handle error
 }
 
 //
