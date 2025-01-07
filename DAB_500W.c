@@ -77,7 +77,14 @@ uint16_t DAB_pwmPhaseShiftP1_S1_HiResticks;
 uint16_t DAB_phaseSyncP1_S1CountDirection;
 float32_t Phase_pu;
 uint32_t HR_Phase_ticks;
-
+float32_t uk;
+float32_t rk = (float32_t)53.5;
+float32_t yk = (float32_t)53.5;
+uint16_t  myADC0Results;
+float32_t  Vout;
+float32_t Kp_UP = 0.0f;
+float32_t Ki_UP = 0.0f;
+uint16_t  PWM_EN8 = 0;
 //
 // Function Prototypes
 //
@@ -134,25 +141,38 @@ void main(void)
     //
     EINT;
     ERTM;
-
+    HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(0.0);
+    HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+    HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+    HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
+    HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
+    EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+    HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+    EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+    HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
     while(1)
     {
         if (dutyFine != previousDutyFine)
         {
+//            GPIO_writePin(myGPIO0, PWM_EN8);
 
             Phase_pu = dutyFine;
-            HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(Phase_pu);
-            HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
-            HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
-            HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
-            HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
-            EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
-            HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
-            EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
-            HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
-
+//            HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(Phase_pu);
+//            HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+//            HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+//            HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
+//            HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
+//            EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+//            HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+//            EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+//            HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+            PI_CONTROLLER.sps->Kp = Kp_UP;
+            PI_CONTROLLER.sps->Ki = Ki_UP;
+            DCL_REQUEST_UPDATE(&PI_CONTROLLER);
+            DCL_fupdatePI(&PI_CONTROLLER);
             previousDutyFine = dutyFine;
         }
+
     }
 }
 
@@ -203,7 +223,67 @@ uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPr
     return (uint32_t)DAB_pwmPhaseShift_P1_S1_ticks;
 
 }
+// initialize CPU timer0 in sysconfig
+__interrupt void INT_myCPUTIMER0_ISR(void)
+{
 
+    //
+    // rk = Target referenced value
+    // yk = Current feedback value
+    // uk = Output control effort
+    //
+
+
+    //
+    // Read the input data buffers
+    //
+//    rk = 110.0;
+//    yk = 100.0;
+
+    //
+    // Run the controller
+    // Equivalent to uk = DCL_runPI_series(ctrl_handle, rk, yk);
+    //
+//    uk = DCL_runPI_C1(&PI_CONTROLLER, rk, yk);
+//    Interrupt_clearACKGroup(INT_myCPUTIMER0_INTERRUPT_ACK_GROUP);
+}
+//
+//ADC Interrupt 1 ISR
+//
+__interrupt void INT_myADC0_1_ISR(void)
+{
+    //
+    // Add the latest result to the buffer
+    //
+    myADC0Results = ADC_readResult(ADCBRESULT_BASE, ADC_SOC_NUMBER0);
+    Vout = __divf32(((float32_t)myADC0Results - 2039.5f), 9.9675f);
+    if (Vout >= 20.0){
+    yk = Vout;
+    uk = DCL_runPI_C1(&PI_CONTROLLER, rk, yk);
+    HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(uk);
+    HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+    HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+    HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
+    HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
+    }
+    //
+    // Clear the interrupt flag
+    //
+    ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
+    //
+    // Check if overflow has occurred
+    //
+    if(true == ADC_getInterruptOverflowStatus(myADC0_BASE, ADC_INT_NUMBER1))
+    {
+        ADC_clearInterruptOverflowStatus(myADC0_BASE, ADC_INT_NUMBER1);
+        ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
+    }
+
+    //
+    // Acknowledge the interrupt
+    //
+    Interrupt_clearACKGroup(INT_myADC0_1_INTERRUPT_ACK_GROUP);
+}
 
 //
 // End of File

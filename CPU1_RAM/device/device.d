@@ -105,6 +105,8 @@ device/device.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/
 device/device.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_spi.h
 device/device.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h
 device/device.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h
+device/device.obj: syscfg/device_cmd.h
+device/device.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/cpy_tbl.h
 
 ../device/device.c:
 
@@ -315,4 +317,8 @@ D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_spi.h:
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h:
+
+syscfg/device_cmd.h:
+
+D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/cpy_tbl.h:
 

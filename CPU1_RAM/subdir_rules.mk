@@ -26,6 +26,12 @@ syscfg/board.opt: build-1024036241
 syscfg/board.json: build-1024036241
 syscfg/pinmux.csv: build-1024036241
 syscfg/epwm.dot: build-1024036241
+syscfg/adc.dot: build-1024036241
+syscfg/device_cmd.cmd: build-1024036241
+syscfg/device_cmd.c: build-1024036241
+syscfg/device_cmd.h: build-1024036241
+syscfg/device_cmd.opt: build-1024036241
+syscfg/device_cmd.cmd.genlibs: build-1024036241
 syscfg/c2000ware_libraries.cmd.genlibs: build-1024036241
 syscfg/c2000ware_libraries.opt: build-1024036241
 syscfg/c2000ware_libraries.c: build-1024036241

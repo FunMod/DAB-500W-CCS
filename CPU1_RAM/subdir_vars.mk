@@ -5,9 +5,6 @@
 SHELL = cmd.exe
 
 # Add inputs and outputs from these tool invocations to the build variables 
-CMD_SRCS += \
-../28003x_generic_ram_lnk.cmd 
-
 SYSCFG_SRCS += \
 ../c2000.syscfg 
 
@@ -33,12 +30,19 @@ D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C4.asm
 C_SRCS += \
 ../DAB_500W.c \
 ./syscfg/board.c \
+./syscfg/device_cmd.c \
 ./syscfg/c2000ware_libraries.c \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c 
+
+GEN_CMDS += \
+./syscfg/device_cmd.cmd 
 
 GEN_FILES += \
 ./syscfg/board.c \
 ./syscfg/board.opt \
+./syscfg/device_cmd.cmd \
+./syscfg/device_cmd.c \
+./syscfg/device_cmd.opt \
 ./syscfg/c2000ware_libraries.opt \
 ./syscfg/c2000ware_libraries.c 
 
@@ -48,16 +52,19 @@ GEN_MISC_DIRS += \
 C_DEPS += \
 ./DAB_500W.d \
 ./syscfg/board.d \
+./syscfg/device_cmd.d \
 ./syscfg/c2000ware_libraries.d \
 ./DCL_error.d 
 
 GEN_OPTS += \
 ./syscfg/board.opt \
+./syscfg/device_cmd.opt \
 ./syscfg/c2000ware_libraries.opt 
 
 OBJS += \
 ./DAB_500W.obj \
 ./syscfg/board.obj \
+./syscfg/device_cmd.obj \
 ./syscfg/c2000ware_libraries.obj \
 ./DCL_clamp_C1.obj \
 ./DCL_DF11_C1.obj \
@@ -97,6 +104,9 @@ GEN_MISC_FILES += \
 ./syscfg/board.json \
 ./syscfg/pinmux.csv \
 ./syscfg/epwm.dot \
+./syscfg/adc.dot \
+./syscfg/device_cmd.h \
+./syscfg/device_cmd.cmd.genlibs \
 ./syscfg/c2000ware_libraries.cmd.genlibs \
 ./syscfg/c2000ware_libraries.h \
 ./syscfg/clocktree.h 
@@ -107,6 +117,7 @@ GEN_MISC_DIRS__QUOTED += \
 OBJS__QUOTED += \
 "DAB_500W.obj" \
 "syscfg\board.obj" \
+"syscfg\device_cmd.obj" \
 "syscfg\c2000ware_libraries.obj" \
 "DCL_clamp_C1.obj" \
 "DCL_DF11_C1.obj" \
@@ -130,6 +141,9 @@ GEN_MISC_FILES__QUOTED += \
 "syscfg\board.json" \
 "syscfg\pinmux.csv" \
 "syscfg\epwm.dot" \
+"syscfg\adc.dot" \
+"syscfg\device_cmd.h" \
+"syscfg\device_cmd.cmd.genlibs" \
 "syscfg\c2000ware_libraries.cmd.genlibs" \
 "syscfg\c2000ware_libraries.h" \
 "syscfg\clocktree.h" 
@@ -137,12 +151,16 @@ GEN_MISC_FILES__QUOTED += \
 C_DEPS__QUOTED += \
 "DAB_500W.d" \
 "syscfg\board.d" \
+"syscfg\device_cmd.d" \
 "syscfg\c2000ware_libraries.d" \
 "DCL_error.d" 
 
 GEN_FILES__QUOTED += \
 "syscfg\board.c" \
 "syscfg\board.opt" \
+"syscfg\device_cmd.cmd" \
+"syscfg\device_cmd.c" \
+"syscfg\device_cmd.opt" \
 "syscfg\c2000ware_libraries.opt" \
 "syscfg\c2000ware_libraries.c" 
 
@@ -165,6 +183,7 @@ ASM_DEPS__QUOTED += \
 C_SRCS__QUOTED += \
 "../DAB_500W.c" \
 "./syscfg/board.c" \
+"./syscfg/device_cmd.c" \
 "./syscfg/c2000ware_libraries.c" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c" 
 

@@ -115,15 +115,15 @@ void PI_CONTROLLER_init(){
     //
     PI_CONTROLLER.sps = &PI_CONTROLLER_sps;
     PI_CONTROLLER.css = &PI_CONTROLLER_css;
-    PI_CONTROLLER.Kp = 1.0f;
-    PI_CONTROLLER.Ki = 0.0f;
+    PI_CONTROLLER.Kp = 0.0266f;
+    PI_CONTROLLER.Ki = 0.008f;
     PI_CONTROLLER.i10 = 0.0f;
-    PI_CONTROLLER.Umax = 1.0f;
-    PI_CONTROLLER.Umin = -1.0f;
+    PI_CONTROLLER.Umax = 0.25f;
+    PI_CONTROLLER.Umin = -0.25f;
     PI_CONTROLLER.i6 = 1.0f;
     PI_CONTROLLER.i11 = 0.0f;
-    PI_CONTROLLER.Imax = 1.0f;
-    PI_CONTROLLER.Imin = -1.0f;
+    PI_CONTROLLER.Imax = 0.25f;
+    PI_CONTROLLER.Imin = -0.25f;
 }
 void CONTROLLER_init(){
     PI_CONTROLLER_init();

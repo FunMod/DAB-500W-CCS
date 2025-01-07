@@ -59,6 +59,10 @@ extern "C"
 //*****************************************************************************
 
 //
+// ANALOG -> myANALOGPinMux0 Pinmux
+//
+
+//
 // EPWM1 -> myEPWM0 Pinmux
 //
 //
@@ -122,9 +126,30 @@ extern "C"
 #define myEPWM3_EPWMB_GPIO 7
 #define myEPWM3_EPWMB_PIN_CONFIG GPIO_7_EPWM4_B
 //
-// GPIO12 - GPIO Settings
+// GPIO31 - GPIO Settings
 //
-#define myGPIO0_GPIO_PIN_CONFIG GPIO_12_GPIO12
+#define myGPIO0_GPIO_PIN_CONFIG GPIO_31_GPIO31
+
+//*****************************************************************************
+//
+// ADC Configurations
+//
+//*****************************************************************************
+#define myADC0_BASE ADCB_BASE
+#define myADC0_RESULT_BASE ADCBRESULT_BASE
+#define myADC0_SOC0 ADC_SOC_NUMBER0
+#define myADC0_FORCE_SOC0 ADC_FORCE_SOC0
+#define myADC0_SAMPLE_WINDOW_SOC0 75
+#define myADC0_TRIGGER_SOURCE_SOC0 ADC_TRIGGER_EPWM3_SOCA
+#define myADC0_CHANNEL_SOC0 ADC_CH_ADCIN2
+void myADC0_init();
+
+
+//*****************************************************************************
+//
+// ASYSCTL Configurations
+//
+//*****************************************************************************
 
 //*****************************************************************************
 //
@@ -137,10 +162,10 @@ extern "C"
 #define myEPWM0_TBPHS 0
 #define myEPWM0_CMPA 300
 #define myEPWM0_CMPB 300
-#define myEPWM0_CMPC 0
+#define myEPWM0_CMPC 600
 #define myEPWM0_CMPD 0
-#define myEPWM0_DBRED 12
-#define myEPWM0_DBFED 12
+#define myEPWM0_DBRED 6
+#define myEPWM0_DBFED 6
 #define myEPWM0_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM0_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM0_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
@@ -152,8 +177,8 @@ extern "C"
 #define myEPWM1_CMPB 300
 #define myEPWM1_CMPC 0
 #define myEPWM1_CMPD 0
-#define myEPWM1_DBRED 12
-#define myEPWM1_DBFED 12
+#define myEPWM1_DBRED 6
+#define myEPWM1_DBFED 6
 #define myEPWM1_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM1_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM1_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
@@ -163,8 +188,8 @@ extern "C"
 #define myEPWM2_TBPHS 0
 #define myEPWM2_CMPA 300
 #define myEPWM2_CMPB 300
-#define myEPWM2_CMPC 0
-#define myEPWM2_CMPD 0
+#define myEPWM2_CMPC 400
+#define myEPWM2_CMPD 550
 #define myEPWM2_DBRED 12
 #define myEPWM2_DBFED 12
 #define myEPWM2_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
@@ -189,8 +214,20 @@ extern "C"
 // GPIO Configurations
 //
 //*****************************************************************************
-#define myGPIO0 12
+#define myGPIO0 31
 void myGPIO0_init();
+
+//*****************************************************************************
+//
+// INTERRUPT Configurations
+//
+//*****************************************************************************
+
+// Interrupt Settings for INT_myADC0_1
+// ISR need to be defined for the registered interrupts
+#define INT_myADC0_1 INT_ADCB1
+#define INT_myADC0_1_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
+extern __interrupt void INT_myADC0_1_ISR(void);
 
 //*****************************************************************************
 //
@@ -204,8 +241,11 @@ void myGPIO0_init();
 //
 //*****************************************************************************
 void	Board_init();
+void	ADC_init();
+void	ASYSCTL_init();
 void	EPWM_init();
 void	GPIO_init();
+void	INTERRUPT_init();
 void	SYNC_init();
 void	PinMux_init();
 

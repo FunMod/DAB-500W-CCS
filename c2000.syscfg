@@ -9,6 +9,11 @@
 /**
  * Import the modules used in this configuration.
  */
+const adc         = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1        = adc.addInstance();
+const analog      = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1     = analog.addInstance();
+const asysctl     = scripting.addModule("/driverlib/asysctl.js");
 const epwm        = scripting.addModule("/driverlib/epwm.js", {}, false);
 const epwm1       = epwm.addInstance();
 const epwm2       = epwm.addInstance();
@@ -16,14 +21,47 @@ const epwm3       = epwm.addInstance();
 const epwm4       = epwm.addInstance();
 const gpio        = scripting.addModule("/driverlib/gpio.js", {}, false);
 const gpio1       = gpio.addInstance();
+const sync        = scripting.addModule("/driverlib/sync.js");
 const sfo         = scripting.addModule("/libraries/calibration/hrpwm/sfo.js", {}, false);
 const sfo1        = sfo.addInstance();
 const controller  = scripting.addModule("/libraries/control/dcl/controller.js", {}, false);
 const controller1 = controller.addInstance();
+const CMD         = scripting.addModule("/utilities/cmd_tool/cmd_syscfg/source/CMD");
+const CMD1        = CMD.addInstance();
+const CMD2        = CMD.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+adc1.$name                   = "myADC0";
+adc1.adcClockPrescaler       = "ADC_CLK_DIV_2_0";
+adc1.enabledSOCs             = ["ADC_SOC_NUMBER0"];
+adc1.soc0SampleWindow        = 9;
+adc1.interruptPulseMode      = "ADC_PULSE_END_OF_CONV";
+adc1.enabledInts             = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1        = true;
+adc1.registerInterrupts      = ["1"];
+adc1.adcBase                 = "ADCB_BASE";
+adc1.soc0Channel             = "ADC_CH_ADCIN2";
+adc1.soc0Trigger             = "ADC_TRIGGER_EPWM3_SOCA";
+adc1.adcInt1.enableInterrupt = true;
+
+analog1.$name                      = "myANALOGPinMux0";
+adc1.analog                        = analog1;
+analog1.useCase                    = "CUSTOM";
+analog1.useInterfacePins           = ["B2/C6"];
+analog1.analog.$assign             = "ANALOG";
+analog1.analog["b2/c6Pin"].$assign = "hsecAnalog.14";
+
+asysctl.analogReference        = "INTERNAL";
+asysctl.analogReferenceVoltage = "1P65";
+
+const divider5       = system.clockTree["PLL_REFDIV"];
+divider5.divideValue = 2;
+
+const mux3       = system.clockTree["OSCCLKSRCSEL"];
+mux3.inputSelect = "X1_XTAL";
+
 epwm1.$name                                                      = "myEPWM0";
 epwm1.$hardware                                                  = system.deviceData.board.components.PWM_LOC1;
 epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
@@ -33,8 +71,6 @@ epwm1.epwmCounterCompare_cmpA                                    = 300;
 epwm1.epwmCounterCompare_cmpB                                    = 300;
 epwm1.epwmDeadband_enableRED                                     = true;
 epwm1.epwmDeadband_enableFED                                     = true;
-epwm1.epwmDeadband_delayRED                                      = 12;
-epwm1.epwmDeadband_delayFED                                      = 12;
 epwm1.epwmTimebase_syncInPulseSource                             = "EPWM_SYNC_IN_PULSE_SRC_DISABLE";
 epwm1.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
@@ -46,6 +82,9 @@ epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTP
 epwm1.hrpwm_HRLoadA                                              = "HRPWM_LOAD_ON_CNTR_ZERO_PERIOD";
 epwm1.hrpwm_HRLoadB                                              = "HRPWM_LOAD_ON_CNTR_ZERO_PERIOD";
 epwm1.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmCounterCompare_cmpC                                    = 600;
+epwm1.epwmDeadband_delayRED                                      = 6;
+epwm1.epwmDeadband_delayFED                                      = 6;
 
 epwm2.$name                                                      = "myEPWM1";
 epwm2.$hardware                                                  = system.deviceData.board.components.PWM_LOC2;
@@ -58,8 +97,6 @@ epwm2.epwmCounterCompare_cmpB                                    = 300;
 epwm2.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
 epwm2.epwmDeadband_enableRED                                     = true;
 epwm2.epwmDeadband_enableFED                                     = true;
-epwm2.epwmDeadband_delayRED                                      = 12;
-epwm2.epwmDeadband_delayFED                                      = 12;
 epwm2.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
 epwm2.epwmCounterCompare_shadowLoadModeCMPA                      = "EPWM_COMP_LOAD_ON_CNTR_ZERO_PERIOD";
@@ -68,6 +105,8 @@ epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTP
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
 epwm2.epwmTimebase_phaseShift                                    = 598;
+epwm2.epwmDeadband_delayRED                                      = 6;
+epwm2.epwmDeadband_delayFED                                      = 6;
 
 epwm3.$name                                                      = "myEPWM2";
 epwm3.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
@@ -77,8 +116,6 @@ epwm3.epwmCounterCompare_cmpA                                    = 300;
 epwm3.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
 epwm3.epwmDeadband_enableRED                                     = true;
 epwm3.epwmDeadband_enableFED                                     = true;
-epwm3.epwmDeadband_delayRED                                      = 12;
-epwm3.epwmDeadband_delayFED                                      = 12;
 epwm3.$hardware                                                  = system.deviceData.board.components.PWM_LOC3;
 epwm3.epwmCounterCompare_cmpB                                    = 300;
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
@@ -97,6 +134,13 @@ epwm3.epwmCounterCompare_shadowLoadModeCMPA                      = "EPWM_COMP_LO
 epwm3.epwmCounterCompare_shadowLoadModeCMPB                      = "EPWM_COMP_LOAD_ON_CNTR_ZERO_PERIOD";
 epwm3.hrpwm_edgeModeA                                            = "HRPWM_MEP_CTRL_RISING_AND_FALLING_EDGE";
 epwm3.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm3.epwmEventTrigger_EPWM_SOC_A_triggerEnable                  = true;
+epwm3.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar          = "1";
+epwm3.epwmCounterCompare_cmpC                                    = 400;
+epwm3.epwmCounterCompare_cmpD                                    = 550;
+epwm3.epwmEventTrigger_EPWM_SOC_A_triggerSource                  = "EPWM_SOC_TBCTR_D_CMPD";
+epwm3.epwmDeadband_delayRED                                      = 12;
+epwm3.epwmDeadband_delayFED                                      = 12;
 
 epwm4.$name                                                      = "myEPWM3";
 epwm4.$hardware                                                  = system.deviceData.board.components.PWM_LOC4;
@@ -107,8 +151,6 @@ epwm4.epwmCounterCompare_cmpA                                    = 300;
 epwm4.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
 epwm4.epwmDeadband_enableRED                                     = true;
 epwm4.epwmDeadband_enableFED                                     = true;
-epwm4.epwmDeadband_delayRED                                      = 12;
-epwm4.epwmDeadband_delayFED                                      = 12;
 epwm4.epwmCounterCompare_cmpB                                    = 300;
 epwm4.epwmCounterCompare_shadowLoadModeCMPA                      = "EPWM_COMP_LOAD_ON_CNTR_ZERO_PERIOD";
 epwm4.epwmCounterCompare_shadowLoadModeCMPB                      = "EPWM_COMP_LOAD_ON_CNTR_ZERO_PERIOD";
@@ -127,18 +169,69 @@ epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTP
 epwm4.epwmDeadband_outputSwapOutA                                = true;
 epwm4.epwmDeadband_outputSwapOutB                                = true;
 epwm4.epwmTimebase_counterModeAfterSync                          = "EPWM_COUNT_MODE_UP_AFTER_SYNC";
+epwm4.epwmDeadband_delayRED                                      = 12;
+epwm4.epwmDeadband_delayFED                                      = 12;
 
 gpio1.$name             = "myGPIO0";
 gpio1.writeInitialValue = true;
 gpio1.initialValue      = 1;
 gpio1.direction         = "GPIO_DIR_MODE_OUT";
-gpio1.gpioPin.$assign   = "hsecDigital.58";
-scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to FSI Header on the Control Card F280039C\\. Consider selecting it in \'use hardware\' above\\. @@@.+?@@@", gpio1, "gpioPin");
+gpio1.gpioPin.$assign   = "hsecDigital.82";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to CANA on the Control Card F280039C\\. Consider selecting it in \'use hardware\' above\\. @@@.+?@@@", gpio1, "gpioPin");
 
 sfo1.$name = "mySFO0";
 
 controller1.$name            = "PI_CONTROLLER";
 controller1.controllerChoice = "PI";
+controller1.Kp               = "0.0266f";
+controller1.Umax             = "0.25f";
+controller1.Umin             = "-0.25f";
+controller1.Imax             = "0.25f";
+controller1.Imin             = "-0.25f";
+controller1.Ki               = "0.008f";
+
+CMD.activateCMD = true;
+CMD.activeCMD   = "CMD_RAM";
+
+CMD1.$name                        = "CMD_RAM";
+CMD1.sectionMemory_ramfunc        = ["RAMM0"];
+CMD1.sectionMemory_text           = ["RAMLS0","RAMLS1","RAMLS2","RAMLS3","RAMLS4"];
+CMD1.sectionMemory_cinit          = ["RAMM0"];
+CMD1.sectionMemory_switch         = ["RAMM0"];
+CMD1.sectionMemory_stack          = ["RAMM1"];
+CMD1.sectionMemory_bss            = ["RAMLS5"];
+CMD1.sectionMemory_init_array     = ["RAMM0"];
+CMD1.sectionMemory_const          = ["RAMLS5"];
+CMD1.sectionMemory_data           = ["RAMLS5"];
+CMD1.sectionMemory_sysmem         = ["RAMLS5"];
+CMD1.userSection.create(1);
+CMD1.userSection[0].$name         = "dclfuncs";
+CMD1.userSection[0].sectionMemory = ["RAMLS3"];
+
+CMD2.$name                               = "CMD_FLASH";
+CMD2.sectionMemory_ramfunc               = ["FLASH_BANK0_SEC1"];
+CMD2.sectionAlignEnable_ramfunc          = true;
+CMD2.sectionRun_ramfunc                  = ["RAMLS0"];
+CMD2.sectionRunFromDifferentAddr_ramfunc = true;
+CMD2.sectionMemory_text                  = ["FLASH_BANK0_SEC2","FLASH_BANK0_SEC3","FLASH_BANK0_SEC4"];
+CMD2.sectionAlignEnable_text             = true;
+CMD2.sectionMemory_binit                 = ["FLASH_BANK0_SEC1"];
+CMD2.sectionAlignEnable_binit            = true;
+CMD2.sectionMemory_cinit                 = ["FLASH_BANK0_SEC1"];
+CMD2.sectionAlignEnable_cinit            = true;
+CMD2.sectionMemory_switch                = ["FLASH_BANK0_SEC1"];
+CMD2.sectionAlignEnable_switch           = true;
+CMD2.sectionMemory_stack                 = ["RAMM1"];
+CMD2.sectionMemory_bss                   = ["RAMLS5"];
+CMD2.sectionMemory_init_array            = ["FLASH_BANK0_SEC1"];
+CMD2.sectionAlignEnable_init_array       = true;
+CMD2.sectionMemory_const                 = ["FLASH_BANK0_SEC4"];
+CMD2.sectionAlignEnable_const            = true;
+CMD2.sectionMemory_data                  = ["RAMLS5"];
+CMD2.sectionMemory_sysmem                = ["RAMLS5"];
+CMD2.sectionMemory_ovly                  = ["FLASH_BANK0_SEC1"];
+CMD2.sectionAlignEnable_ovly             = true;
+CMD2.sectionMemory_codestart             = "0x080000";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

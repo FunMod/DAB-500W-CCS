@@ -1,0 +1,80 @@
+digraph {
+    graph [fontname = "helvetica"];
+    node  [fontname = "helvetica"];
+    edge  [fontname = "helvetica"];
+    graph [mclimit=50 nodesep=0.5 rankdir=LR ranksep=1.25]
+
+    node [shape = circle style=filled];
+
+        adcb_SOC0 [label="ADCB SOC0" fillcolor="#FFA0A0" pos="0.000,7.689!"]
+        adcb_SOC1 [label="ADCB SOC1" fillcolor="#FFA0A0" pos="2.942,7.103!"]
+        adcb_SOC2 [label="ADCB SOC2" fillcolor="#FFA0A0" pos="5.437,5.437!"]
+        adcb_SOC3 [label="ADCB SOC3" fillcolor="#FFA0A0" pos="7.103,2.942!"]
+        adcb_SOC4 [label="ADCB SOC4" fillcolor="#FFA0A0" pos="7.689,0.000!"]
+        adcb_SOC5 [label="ADCB SOC5" fillcolor="#FFA0A0" pos="7.103,-2.942!"]
+        adcb_SOC6 [label="ADCB SOC6" fillcolor="#FFA0A0" pos="5.437,-5.437!"]
+        adcb_SOC7 [label="ADCB SOC7" fillcolor="#FFA0A0" pos="2.942,-7.103!"]
+        adcb_SOC8 [label="ADCB SOC8" fillcolor="#FFA0A0" pos="0.000,-7.689!"]
+        adcb_SOC9 [label="ADCB SOC9" fillcolor="#FFA0A0" pos="-2.942,-7.103!"]
+        adcb_SOC10 [label="ADCB SOC10" fillcolor="#FFA0A0" pos="-5.437,-5.437!"]
+        adcb_SOC11 [label="ADCB SOC11" fillcolor="#FFA0A0" pos="-7.103,-2.942!"]
+        adcb_SOC12 [label="ADCB SOC12" fillcolor="#FFA0A0" pos="-7.689,-0.000!"]
+        adcb_SOC13 [label="ADCB SOC13" fillcolor="#FFA0A0" pos="-7.103,2.942!"]
+        adcb_SOC14 [label="ADCB SOC14" fillcolor="#FFA0A0" pos="-5.437,5.437!"]
+        adcb_SOC15 [label="ADCB SOC15" fillcolor="#FFA0A0" pos="-2.942,7.103!"]
+        adcb_SOC0 -> adcb_SOC1
+        adcb_SOC1 -> adcb_SOC2
+        adcb_SOC2 -> adcb_SOC3
+        adcb_SOC3 -> adcb_SOC4
+        adcb_SOC4 -> adcb_SOC5
+        adcb_SOC5 -> adcb_SOC6
+        adcb_SOC6 -> adcb_SOC7
+        adcb_SOC7 -> adcb_SOC8
+        adcb_SOC8 -> adcb_SOC9
+        adcb_SOC9 -> adcb_SOC10
+        adcb_SOC10 -> adcb_SOC11
+        adcb_SOC11 -> adcb_SOC12
+        adcb_SOC12 -> adcb_SOC13
+        adcb_SOC13 -> adcb_SOC14
+        adcb_SOC14 -> adcb_SOC15
+        adcb_SOC15 -> adcb_SOC0
+    node [shape=rect style=filled];
+        ADC_TRIGGER_SW_ONLY[label="Software only" fillcolor="yellow"  fontsize="40" color="white" pos="24.000,-3.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY[label="ADCB"  fontsize="40" fillcolor="white" color="white" pos="24.000,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc1[label="soc1 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="32.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc2[label="soc2 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="43.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc3[label="soc3 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="54.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc4[label="soc4 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="65.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc5[label="soc5 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="76.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc6[label="soc6 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="87.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc7[label="soc7 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="98.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc8[label="soc8 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="109.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc9[label="soc9 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="120.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc10[label="soc10 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="131.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc11[label="soc11 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="142.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc12[label="soc12 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="153.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc13[label="soc13 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="164.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc14[label="soc14 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="175.500,-9.000!"]
+          
+        adcb_ADC_TRIGGER_SW_ONLY_soc15[label="soc15 (S+H[SYSCLK]: 1, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="11.000" pos="186.500,-9.000!"]
+        ADC_TRIGGER_EPWM3_SOCA[label="ePWM3, ADCSOCA" fillcolor="yellow"  fontsize="40" color="white" pos="24.000,-12.000!"]
+          
+        adcb_ADC_TRIGGER_EPWM3_SOCA[label="ADCB"  fontsize="40" fillcolor="white" color="white" pos="24.000,-18.000!"]
+          
+        adcb_ADC_TRIGGER_EPWM3_SOCA_soc0[label="soc0 (S+H[SYSCLK]: 9, Conv[SYSCLK]: 21)" fillcolor="#FFA0A0" width="15.000" pos="34.500,-18.000!"]
+}
