@@ -48,6 +48,7 @@ extern "C"
 #include "board.h"
 #include "DCL.h"
 #include "DCLF32.h"
+#include "DCL_refgen.h"
 
 #include <SFO_V8.h>
 
@@ -69,10 +70,31 @@ extern DCL_PI PI_CONTROLLER;
 //
 void PI_CONTROLLER_init();
 
+//
+// REFGEN
+//
+//
+// myREFGEN0 macros
+//
+#define myREFGEN0_FREQ 1000
+#define myREFGEN0_AMPL 10
+#define myREFGEN0_OFFS 0
+#define myREFGEN0_MAX 120
+#define myREFGEN0_MIN 0
+//
+// myREFGEN0 variables
+//
+extern DCL_REFGEN myREFGEN0;
+//
+// REFGEN functions
+//
+void myREFGEN0_init();
+
 
 
 void HRPWM_SFO_init();
 void CONTROLLER_init();
+void REFGEN_init();
 void C2000Ware_libraries_init();
 
 //*****************************************************************************

@@ -87,21 +87,32 @@ SECTIONS
     //
     .reset               : >  RESET, TYPE = DSECT /* not used, */
     codestart            : >  0x000000
-    .text                : >> RAMLS0 | RAMLS1 | RAMLS2 | RAMLS3 | RAMLS4
+    .text                : >> RAMGS3 | RAMLS3 | RAMLS4 | RAMLS5 | RAMLS6 | RAMLS7
     .TI.ramfunc          : >  RAMM0
     .cinit               : >  RAMM0
     .stack               : >  RAMM1
     .init_array          : >  RAMM0
     .bss                 : >  RAMLS5
-    .const               : >  RAMLS5
-    .data                : >  RAMLS5
+    .const               : >  RAMGS2
+    .data                : >  RAMGS0
     .switch              : >  RAMM0
-    .sysmem              : >  RAMLS5
+    .sysmem              : >  RAMGS2
+
+    //
+    // CLA Sections
+    //
+    Cla1Prog             : >  RAMLS0
+    .const_cla           : >  RAMLS1
+    .scratchpad          : >  RAMLS1
+    .bss_cla             : >  RAMLS1
+    cla1ToCpuMsgRAM      : >  CLATOCPU_MSGRAM
+    cpuToCla1MsgRAM      : >  CPUTOCLA_MSGRAM
 
     //
     // User Sections
     //
-    dclfuncs {  }          >  RAMLS3
+    dclfuncs_RAM { *(dclfuncs) }    >  RAMGS1,
+                              ALIGN(2)
 
 }
 
@@ -191,7 +202,7 @@ SECTIONS
     .text                : >> FLASH_BANK0_SEC2 | FLASH_BANK0_SEC3 | FLASH_BANK0_SEC4,
                               ALIGN(8)
     .TI.ramfunc          :    LOAD >  FLASH_BANK0_SEC1,
-                              RUN  >  RAMLS0,
+                              RUN  >  RAMLS3,
                               TABLE(BINIT),
                               ALIGN(8)
     .binit               : >  FLASH_BANK0_SEC1,
@@ -210,6 +221,14 @@ SECTIONS
     .switch              : >  FLASH_BANK0_SEC1,
                               ALIGN(8)
     .sysmem              : >  RAMLS5
+
+    //
+    // User Sections
+    //
+    dclfuncs_FLASH { *(dclfuncs) }       LOAD >  FLASH_BANK2_SEC10,
+                              RUN  >  RAMLS7,
+                              TABLE(copyTable_dclfuncs_FLASH),
+                              ALIGN(8)
 
 }
 

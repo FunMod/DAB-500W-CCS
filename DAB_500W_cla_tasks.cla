@@ -1,0 +1,13 @@
+/*
+ * DAB_500W_cla_tasks.cla
+ *
+ *  Created on: 2025Äê2ÔÂ1ÈÕ
+ *      Author: Admin
+ */
+#include "driverlib.h"
+#include "board.h"
+#include "DAB_500W_shared.h"
+__attribute__((interrupt)) void Cla1Task1(void)
+{
+
+}

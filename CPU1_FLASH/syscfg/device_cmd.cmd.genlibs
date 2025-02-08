@@ -18,4 +18,4 @@
  *                TI C/C++ toolchain
  */
 --define=CMDTOOL
---define=CMD_RAM
+--define=CMD_FLASH

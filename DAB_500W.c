@@ -51,6 +51,8 @@
 #include "device.h"
 #include "board.h"
 #include "c2000ware_libraries.h"
+#include "DCLCLA.h"
+
 //
 // Defines
 //
@@ -65,15 +67,19 @@
 #endif
 #define DAB_PWMSYSCLOCK_FREQ_HZ   ((float32_t)120*1000000)
 #define DAB_pwmFrequency_Hz ((float32_t)100*1000)
+#define PWM_PERIOD 600
 
+#define GET_TASK_A_TIMER_OVERFLOW_STATUS CPUTimer_getTimerOverflowStatus(CPUTIMER0_BASE)
+#define CLEAR_TASK_A_TIMER_OVERFLOW_FLAG CPUTimer_clearOverflowFlag(CPUTIMER0_BASE)
+
+#define GET_TASK_B_TIMER_OVERFLOW_STATUS CPUTimer_getTimerOverflowStatus(CPUTIMER1_BASE)
+#define CLEAR_TASK_B_TIMER_OVERFLOW_FLAG CPUTimer_clearOverflowFlag(CPUTIMER1_BASE)
 //
 // Globals
 //
 float32_t dutyFine=0.0;
 float32_t previousDutyFine=0.0;
-float32_t DAB_pwmPhaseShift_P1_S1_ns;
-int32_t DAB_pwmPhaseShift_P1_S1_ticks;
-uint16_t DAB_pwmPhaseShiftP1_S1_HiResticks;
+
 uint16_t DAB_phaseSyncP1_S1CountDirection;
 float32_t Phase_pu;
 uint32_t HR_Phase_ticks;
@@ -84,11 +90,45 @@ uint16_t  myADC0Results;
 float32_t  Vout;
 float32_t Kp_UP = 0.0f;
 float32_t Ki_UP = 0.0f;
-uint16_t  PWM_EN8 = 0;
+int16_t filter1Result;
+int16_t soft_start_state = 0;
+float32_t soft_start_value = 53.0f;
+//
+// Variable declarations for state machine
+//
+void (*Alpha_State_Ptr)(void);  // Base States pointer
+void (*A_Task_Ptr)(void);       // State pointer A branch
+void (*B_Task_Ptr)(void);       // State pointer B branch
+//void (*C_Task_Ptr)(void);       // State pointer C branch
+
+//
+// State Machine function prototypes
+//
+
+//
+// Alpha states
+//
+void A0(void);  //state A0
+void B0(void);  //state B0
+
+//
+// A branch states
+//
+void A1(void);  //state A1
+void A2(void);  //state A2
+//
+// B branch states
+//
+void B1(void);  //state B1
+void B2(void);  //state B2
+void B3(void);  //state B3
+
 //
 // Function Prototypes
 //
 uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPrimSec_pu);
+void setEPWMDutyCycle(float dutyCyclePercentage0, float dutyCyclePercentage1);
+void soft_start(void);
 //
 // Main
 //
@@ -117,6 +157,13 @@ void main(void)
     Interrupt_initVectorTable();
 
     //
+    // Tasks State-machine init
+    //
+    Alpha_State_Ptr = &A0;
+    A_Task_Ptr = &A1;
+    B_Task_Ptr = &B1;
+
+    //
     // Disable sync(Freeze clock to PWM as well)
     //
     SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);
@@ -126,7 +173,6 @@ void main(void)
     // PinMux and Peripheral Initialization
     //
     Board_init();
-
     //
     // Enable sync and clock to PWM
     //
@@ -135,41 +181,36 @@ void main(void)
     // C2000Ware Library initialization
     //
     C2000Ware_libraries_init();
-
     //
     // Enable Global Interrupt (INTM) and real time interrupt (DBGM)
     //
     EINT;
     ERTM;
-    HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(0.0);
-    HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
-    HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
-    HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
-    HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
-    EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
-    HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
-    EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
-    HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+
     while(1)
     {
+        //
+        // State machine entry & exit point
+        //
+        (*Alpha_State_Ptr)(); // jump to an Alpha state (A0,B0,...)
+
         if (dutyFine != previousDutyFine)
         {
-//            GPIO_writePin(myGPIO0, PWM_EN8);
-
             Phase_pu = dutyFine;
-//            HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(Phase_pu);
-//            HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
-//            HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
-//            HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
-//            HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
+
+            HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(Phase_pu);
+            HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+            HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+            HRPWM_setCountModeAfterSync(myEPWM2_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
+            HRPWM_setCountModeAfterSync(myEPWM3_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
 //            EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
 //            HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
 //            EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
 //            HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
-            PI_CONTROLLER.sps->Kp = Kp_UP;
-            PI_CONTROLLER.sps->Ki = Ki_UP;
-            DCL_REQUEST_UPDATE(&PI_CONTROLLER);
-            DCL_fupdatePI(&PI_CONTROLLER);
+//            PI_CONTROLLER.sps->Kp = Kp_UP;
+//            PI_CONTROLLER.sps->Ki = Ki_UP;
+//            DCL_REQUEST_UPDATE(&PI_CONTROLLER);
+//            DCL_fupdatePI(&PI_CONTROLLER);
             previousDutyFine = dutyFine;
         }
 
@@ -178,21 +219,24 @@ void main(void)
 
 uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPrimSec_pu)
 {
+    float32_t DAB_pwmPhaseShift_P1_S1_ns;
+    int32_t DAB_pwmPhaseShift_P1_S1_ticks;
+    uint16_t DAB_pwmPhaseShiftP1_S1_HiResticks;
     //
     // first the phase shift in pu is converter to ns
     // this is done for better debug and user friendliness
     //
     DAB_pwmPhaseShift_P1_S1_ns = DAB_pwmPhaseShiftPrimSec_pu *
-            ((float32_t)1.0 / DAB_pwmFrequency_Hz) *
+            (1.0 / DAB_pwmFrequency_Hz) *
             (1 / ONE_NANO_SEC);
 
     //
     // next this ns is simply converted to ticks
     //
     DAB_pwmPhaseShift_P1_S1_ticks =
-            (int32_t)((float32_t)DAB_pwmPhaseShift_P1_S1_ns *
+            (int32_t)(DAB_pwmPhaseShift_P1_S1_ns *
                     DAB_PWMSYSCLOCK_FREQ_HZ * ONE_NANO_SEC *
-                    TWO_RAISED_TO_THE_POWER_EIGHT) - ((int32_t)2 << 8);
+                    TWO_RAISED_TO_THE_POWER_EIGHT) - (2 << 8);
     //
     // due to the delay line implementation depending on whether it is
     // a phase delay or an advance we need to adjust the
@@ -209,7 +253,7 @@ uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPr
     else
     {
         DAB_phaseSyncP1_S1CountDirection =  EPWM_COUNT_MODE_UP_AFTER_SYNC;
-        DAB_pwmPhaseShift_P1_S1_ticks = DAB_pwmPhaseShift_P1_S1_ticks * -1;
+        DAB_pwmPhaseShift_P1_S1_ticks = -DAB_pwmPhaseShift_P1_S1_ticks;
 
         DAB_pwmPhaseShiftP1_S1_HiResticks =  ((uint16_t) 0xFF - ((uint16_t)
                 (DAB_pwmPhaseShift_P1_S1_ticks & 0x0000FF)));
@@ -223,30 +267,16 @@ uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPr
     return (uint32_t)DAB_pwmPhaseShift_P1_S1_ticks;
 
 }
-// initialize CPU timer0 in sysconfig
-__interrupt void INT_myCPUTIMER0_ISR(void)
+
+
+__interrupt void cla1Isr1(void)
 {
+    // Clear interrupt flags.
+//    ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
+//    Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
 
-    //
-    // rk = Target referenced value
-    // yk = Current feedback value
-    // uk = Output control effort
-    //
-
-
-    //
-    // Read the input data buffers
-    //
-//    rk = 110.0;
-//    yk = 100.0;
-
-    //
-    // Run the controller
-    // Equivalent to uk = DCL_runPI_series(ctrl_handle, rk, yk);
-    //
-//    uk = DCL_runPI_C1(&PI_CONTROLLER, rk, yk);
-//    Interrupt_clearACKGroup(INT_myCPUTIMER0_INTERRUPT_ACK_GROUP);
 }
+
 //
 //ADC Interrupt 1 ISR
 //
@@ -257,15 +287,18 @@ __interrupt void INT_myADC0_1_ISR(void)
     //
     myADC0Results = ADC_readResult(ADCBRESULT_BASE, ADC_SOC_NUMBER0);
     Vout = __divf32(((float32_t)myADC0Results - 2039.5f), 9.9675f);
-    if (Vout >= 20.0){
+//    if (Vout >= 20.0){
+    DCL_runRefgen(&myREFGEN0);
+    rk = DCL_getRefgenPhaseA(&myREFGEN0);
+    if (rk >= 10.0){GPIO_writePin(REFGEN_IO, 1);}else{GPIO_writePin(REFGEN_IO, 0);}
     yk = Vout;
-    uk = DCL_runPI_C1(&PI_CONTROLLER, rk, yk);
-    HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(uk);
-    HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
-    HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
-    HRPWM_setCountModeAfterSync(myEPWM2_BASE, DAB_phaseSyncP1_S1CountDirection);
-    HRPWM_setCountModeAfterSync(myEPWM3_BASE, DAB_phaseSyncP1_S1CountDirection);
-    }
+//    uk = DCL_runPI_C1(&PI_CONTROLLER, rk, yk);
+//    HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(uk);
+//    HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+//    HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+//    HRPWM_setCountModeAfterSync(myEPWM2_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
+//    HRPWM_setCountModeAfterSync(myEPWM3_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
+//    }
     //
     // Clear the interrupt flag
     //
@@ -283,6 +316,207 @@ __interrupt void INT_myADC0_1_ISR(void)
     // Acknowledge the interrupt
     //
     Interrupt_clearACKGroup(INT_myADC0_1_INTERRUPT_ACK_GROUP);
+}
+
+__interrupt void INT_mySDFM0_DR1_ISR(void)
+{
+
+    SDFM_setOutputDataFormat(SDFM1_BASE, SDFM_FILTER_1,
+                             SDFM_DATA_FORMAT_16_BIT);
+        //
+        // Read SDFM filter output
+        //
+
+        if(SDFM_getFIFOISRStatus(SDFM1_BASE, SDFM_FILTER_1) == 0x1U)
+        {
+            filter1Result =
+                         (int16_t)(SDFM_getFIFOData(SDFM1_BASE,
+                                                    SDFM_FILTER_1) >> 16U);
+
+        }
+        else if(SDFM_getNewFilterDataStatus(SDFM1_BASE, SDFM_FILTER_1) == 0x1U)
+        {
+            filter1Result =
+                   (int16_t)(SDFM_getFilterData(SDFM1_BASE, SDFM_FILTER_1) >> 16U);
+        }
+
+        //
+        // Clear SDFM flag register (SDIFLG)
+        //
+        SDFM_clearInterruptFlag(SDFM1_BASE, SDFM_MAIN_INTERRUPT_FLAG |
+                                SDFM_FILTER_1_FIFO_INTERRUPT_FLAG      |
+                                SDFM_FILTER_1_NEW_DATA_FLAG            |
+                                SDFM_FILTER_1_FIFO_OVERFLOW_FLAG);
+
+        //
+        // Acknowledge this interrupt to receive more interrupts from group 5
+        //
+        Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP5);
+}
+void soft_start(void){
+    float dutyCycle_Ramp = 0;
+    dutyCycle_Ramp = DCL_getRefgenPhaseA(&myREFGEN0)/106.0;
+    setEPWMDutyCycle(dutyCycle_Ramp, dutyCycle_Ramp);
+}
+void setEPWMDutyCycle(float dutyCyclePercentage0, float dutyCyclePercentage1) {
+    uint16_t compareValue0;
+    uint16_t compareValue1;
+
+    // 确保占空比在0%到100%之间
+    if (dutyCyclePercentage0 < 0.0) dutyCyclePercentage0 = 0.0;
+    if (dutyCyclePercentage0 > 1.0) dutyCyclePercentage0 = 1.0;
+    if (dutyCyclePercentage1 < 0.0) dutyCyclePercentage1 = 0.0;
+    if (dutyCyclePercentage1 > 1.0) dutyCyclePercentage1 = 1.0;
+
+    // 计算新的CMPX值
+    compareValue0 = (uint16_t)(dutyCyclePercentage0 * 1200);
+    compareValue1 = (uint16_t)(dutyCyclePercentage1 * 1200);
+
+    // 设置CMPB/CMPA值，由于AQ模块限制型CMPA的动作后执行CMPB的动作，因此在设计0-100的占空比时需要有特殊的先后顺序考虑；
+    if (dutyCyclePercentage0 <= 0.25) {
+        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_A, 300);
+        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_B, 300 + compareValue0);
+//        EPWM_setCounterCompareValue(myEPWM1_BASE, EPWM_COUNTER_COMPARE_A, compareValue1);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+    } else if (dutyCyclePercentage0 > 0.25 && dutyCyclePercentage0 <= 0.75){
+        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_B, 300);
+        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_A, 900 - compareValue0);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
+
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
+    }
+    else if (dutyCyclePercentage0 > 0.75) {
+        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_B, 300);
+        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_A, compareValue0 - 900);
+//        EPWM_setCounterCompareValue(myEPWM1_BASE, EPWM_COUNTER_COMPARE_A, 1200-compareValue1);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
+        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
+        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
+    }
+
+
+    // 触发global load
+    EPWM_setGlobalLoadOneShotLatch(myEPWM0_BASE);
+//    EPWM_setGlobalLoadOneShotLatch(myEPWM1_BASE);
+}
+//
+//  STATE-MACHINE SEQUENCING AND SYNCRONIZATION FOR SLOW BACKGROUND TASKS
+//
+
+void A0(void)
+{
+    //
+    // loop rate synchronizer for A-tasks
+    //
+    if(GET_TASK_A_TIMER_OVERFLOW_STATUS == 1)
+    {
+        CLEAR_TASK_A_TIMER_OVERFLOW_FLAG;   // clear flag
+
+        (*A_Task_Ptr)();        // jump to an A Task (A1,A2,A3,...)
+//        vTimer0[0]++;           // virtual timer 0, instance 0 (spare)
+
+    }
+
+    Alpha_State_Ptr = &B0;      // Comment out to allow only A tasks
+}
+
+void B0(void)
+{
+    //
+    // loop rate synchronizer for B-tasks
+    //
+    if(GET_TASK_B_TIMER_OVERFLOW_STATUS  == 1)
+    {
+        CLEAR_TASK_B_TIMER_OVERFLOW_FLAG;               // clear flag
+
+        (*B_Task_Ptr)();        // jump to a B Task (B1,B2,B3,...)
+//        vTimer1[0]++;           // virtual timer 1, instance 0 (spare)
+    }
+
+    Alpha_State_Ptr = &A0;      // Allow C state tasks
+}
+
+//
+//  A - TASKS (executed in every 10 usec)
+//
+void A1(void)
+{
+    if (soft_start_state == 1){
+        HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(0.0);
+        HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
+        HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
+        HRPWM_setCountModeAfterSync(myEPWM2_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
+        HRPWM_setCountModeAfterSync(myEPWM3_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
+        EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+        HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+        EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+        HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+        DCL_setRefgenRamp(&myREFGEN0, soft_start_value, 5.0f);
+        soft_start();
+        A_Task_Ptr = &A2;
+    }
+    else{
+        A_Task_Ptr = &A1;
+    }
+    //
+    //the next time CpuTimer0 'counter' reaches Period value go to A2
+    //
+
+}
+void A2(void)
+{
+    //
+    //the next time CpuTimer0 'counter' reaches Period value go to A2
+    //
+
+    if (DCL_getRefgenPhaseA(&myREFGEN0) == soft_start_value){
+        soft_start();
+        soft_start_state = 0;
+        A_Task_Ptr = &A1;
+
+    }
+    else{
+        soft_start();
+        A_Task_Ptr = &A2;
+    }
+}
+//
+//  B - TASKS (executed in every 10 msec)
+//
+void B1(void)
+{
+    mySFO0_runtime();
+    //
+    // the next time CpuTimer1 'counter' reaches Period value go to B2
+    //
+    B_Task_Ptr = &B2;
+}
+
+void B2(void)
+{
+    B_Task_Ptr = &B3;
+}
+
+void B3(void) //  SPARE
+{
+    //
+    //the next time CpuTimer1 'counter' reaches Period value go to B1
+    //
+    B_Task_Ptr = &B1;
 }
 
 //

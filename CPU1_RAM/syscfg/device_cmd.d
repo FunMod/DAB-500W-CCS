@@ -2,21 +2,21 @@
 
 syscfg/device_cmd.obj: syscfg/device_cmd.c
 syscfg/device_cmd.obj: syscfg/device_cmd.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/cpy_tbl.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h
-syscfg/device_cmd.obj: D:/ti/workspace/DAB_500W/device/driverlib.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/cpy_tbl.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h
+syscfg/device_cmd.obj: F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h
-syscfg/device_cmd.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
+syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_adc.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_asysctl.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_types.h
@@ -111,35 +111,35 @@ syscfg/device_cmd.c:
 
 syscfg/device_cmd.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/cpy_tbl.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/cpy_tbl.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h:
 
-D:/ti/workspace/DAB_500W/device/driverlib.h:
+F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_adc.h:
 

@@ -8,10 +8,14 @@ SHELL = cmd.exe
 SYSCFG_SRCS += \
 ../c2000.syscfg 
 
+CLA_SRCS += \
+../DAB_500W_cla_tasks.cla 
+
 LIB_SRCS += \
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib 
 
 ASM_SRCS += \
+D:/ti/c2000/C2000Ware_5_04_00_00/device_support/f28003x/common/source/f28003x_codestartbranch.asm \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_clamp_C1.asm \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF11_C1.asm \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF13_C1.asm \
@@ -30,6 +34,7 @@ D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C4.asm
 C_SRCS += \
 ../DAB_500W.c \
 ./syscfg/board.c \
+./syscfg/device.c \
 ./syscfg/device_cmd.c \
 ./syscfg/c2000ware_libraries.c \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c 
@@ -40,11 +45,15 @@ GEN_CMDS += \
 GEN_FILES += \
 ./syscfg/board.c \
 ./syscfg/board.opt \
+./syscfg/device.c \
 ./syscfg/device_cmd.cmd \
 ./syscfg/device_cmd.c \
 ./syscfg/device_cmd.opt \
 ./syscfg/c2000ware_libraries.opt \
 ./syscfg/c2000ware_libraries.c 
+
+CLA_DEPS += \
+./DAB_500W_cla_tasks.d 
 
 GEN_MISC_DIRS += \
 ./syscfg 
@@ -52,6 +61,7 @@ GEN_MISC_DIRS += \
 C_DEPS += \
 ./DAB_500W.d \
 ./syscfg/board.d \
+./syscfg/device.d \
 ./syscfg/device_cmd.d \
 ./syscfg/c2000ware_libraries.d \
 ./DCL_error.d 
@@ -63,9 +73,12 @@ GEN_OPTS += \
 
 OBJS += \
 ./DAB_500W.obj \
+./DAB_500W_cla_tasks.obj \
 ./syscfg/board.obj \
+./syscfg/device.obj \
 ./syscfg/device_cmd.obj \
 ./syscfg/c2000ware_libraries.obj \
+./f28003x_codestartbranch.obj \
 ./DCL_clamp_C1.obj \
 ./DCL_DF11_C1.obj \
 ./DCL_DF13_C1.obj \
@@ -83,6 +96,7 @@ OBJS += \
 ./DCL_PID_C4.obj 
 
 ASM_DEPS += \
+./f28003x_codestartbranch.d \
 ./DCL_clamp_C1.d \
 ./DCL_DF11_C1.d \
 ./DCL_DF13_C1.d \
@@ -104,6 +118,7 @@ GEN_MISC_FILES += \
 ./syscfg/board.json \
 ./syscfg/pinmux.csv \
 ./syscfg/epwm.dot \
+./syscfg/device.h \
 ./syscfg/adc.dot \
 ./syscfg/device_cmd.h \
 ./syscfg/device_cmd.cmd.genlibs \
@@ -116,9 +131,12 @@ GEN_MISC_DIRS__QUOTED += \
 
 OBJS__QUOTED += \
 "DAB_500W.obj" \
+"DAB_500W_cla_tasks.obj" \
 "syscfg\board.obj" \
+"syscfg\device.obj" \
 "syscfg\device_cmd.obj" \
 "syscfg\c2000ware_libraries.obj" \
+"f28003x_codestartbranch.obj" \
 "DCL_clamp_C1.obj" \
 "DCL_DF11_C1.obj" \
 "DCL_DF13_C1.obj" \
@@ -141,6 +159,7 @@ GEN_MISC_FILES__QUOTED += \
 "syscfg\board.json" \
 "syscfg\pinmux.csv" \
 "syscfg\epwm.dot" \
+"syscfg\device.h" \
 "syscfg\adc.dot" \
 "syscfg\device_cmd.h" \
 "syscfg\device_cmd.cmd.genlibs" \
@@ -151,6 +170,7 @@ GEN_MISC_FILES__QUOTED += \
 C_DEPS__QUOTED += \
 "DAB_500W.d" \
 "syscfg\board.d" \
+"syscfg\device.d" \
 "syscfg\device_cmd.d" \
 "syscfg\c2000ware_libraries.d" \
 "DCL_error.d" 
@@ -158,13 +178,18 @@ C_DEPS__QUOTED += \
 GEN_FILES__QUOTED += \
 "syscfg\board.c" \
 "syscfg\board.opt" \
+"syscfg\device.c" \
 "syscfg\device_cmd.cmd" \
 "syscfg\device_cmd.c" \
 "syscfg\device_cmd.opt" \
 "syscfg\c2000ware_libraries.opt" \
 "syscfg\c2000ware_libraries.c" 
 
+CLA_DEPS__QUOTED += \
+"DAB_500W_cla_tasks.d" 
+
 ASM_DEPS__QUOTED += \
+"f28003x_codestartbranch.d" \
 "DCL_clamp_C1.d" \
 "DCL_DF11_C1.d" \
 "DCL_DF13_C1.d" \
@@ -183,6 +208,7 @@ ASM_DEPS__QUOTED += \
 C_SRCS__QUOTED += \
 "../DAB_500W.c" \
 "./syscfg/board.c" \
+"./syscfg/device.c" \
 "./syscfg/device_cmd.c" \
 "./syscfg/c2000ware_libraries.c" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c" 
@@ -191,6 +217,7 @@ SYSCFG_SRCS__QUOTED += \
 "../c2000.syscfg" 
 
 ASM_SRCS__QUOTED += \
+"D:/ti/c2000/C2000Ware_5_04_00_00/device_support/f28003x/common/source/f28003x_codestartbranch.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_clamp_C1.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF11_C1.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF13_C1.asm" \

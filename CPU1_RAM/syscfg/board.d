@@ -2,20 +2,20 @@
 
 syscfg/board.obj: syscfg/board.c
 syscfg/board.obj: syscfg/board.h
-syscfg/board.obj: D:/ti/workspace/DAB_500W/device/driverlib.h
+syscfg/board.obj: F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h
-syscfg/board.obj: D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h
+syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_adc.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_asysctl.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_types.h
@@ -105,39 +105,40 @@ syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/s
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_spi.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h
-syscfg/board.obj: D:/ti/workspace/DAB_500W/device/device.h
+syscfg/board.obj: syscfg/device.h
+syscfg/board.obj: syscfg/clocktree.h
 
 syscfg/board.c:
 
 syscfg/board.h:
 
-D:/ti/workspace/DAB_500W/device/driverlib.h:
+F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_ti_config.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/linkage.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdint.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/_stdint40.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/stdint.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/cdefs.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_types.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h:
 
-D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h:
+D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_adc.h:
 
@@ -317,5 +318,7 @@ D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h:
 
-D:/ti/workspace/DAB_500W/device/device.h:
+syscfg/device.h:
+
+syscfg/clocktree.h:
 

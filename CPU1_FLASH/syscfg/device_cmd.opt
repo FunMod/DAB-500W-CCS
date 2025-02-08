@@ -18,4 +18,4 @@
  *                TI C/C++ toolchain
  */
 -DCMDTOOL
--DCMD_RAM
+-DCMD_FLASH

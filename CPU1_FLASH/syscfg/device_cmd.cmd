@@ -3,7 +3,7 @@
 // Active linker CMD configuration selected by 
 // the CMD Tool global settings
 //
-#define CMD_RAM
+#define CMD_FLASH
 #ifdef CMD_RAM
 
 MEMORY
@@ -101,7 +101,7 @@ SECTIONS
     //
     // User Sections
     //
-    dclfuncs {  }          >  RAMLS3
+    dclfuncs_RAM { *(dclfuncs) }    >  RAMLS3
 
 }
 
@@ -210,6 +210,14 @@ SECTIONS
     .switch              : >  FLASH_BANK0_SEC1,
                               ALIGN(8)
     .sysmem              : >  RAMLS5
+
+    //
+    // User Sections
+    //
+    dclfuncs_FLASH { *(dclfuncs) }       LOAD >  FLASH_BANK2_SEC10,
+                              RUN  >  RAMLS7,
+                              TABLE(copyTable_dclfuncs_FLASH),
+                              ALIGN(8)
 
 }
 

@@ -43,6 +43,7 @@ void CMD_RAM_init()
 #ifdef CMD_FLASH
 void CMD_FLASH_init()
 {
+    copy_in(&copyTable_dclfuncs_FLASH);
 }
 #endif
 

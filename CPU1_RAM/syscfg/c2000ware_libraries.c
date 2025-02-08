@@ -38,6 +38,7 @@ void C2000Ware_libraries_init()
 {
     HRPWM_SFO_init();
     CONTROLLER_init();
+    REFGEN_init();
 }
 
 
@@ -115,8 +116,8 @@ void PI_CONTROLLER_init(){
     //
     PI_CONTROLLER.sps = &PI_CONTROLLER_sps;
     PI_CONTROLLER.css = &PI_CONTROLLER_css;
-    PI_CONTROLLER.Kp = 0.0266f;
-    PI_CONTROLLER.Ki = 0.008f;
+    PI_CONTROLLER.Kp = 0.0001f;
+    PI_CONTROLLER.Ki = 0.6f;
     PI_CONTROLLER.i10 = 0.0f;
     PI_CONTROLLER.Umax = 0.25f;
     PI_CONTROLLER.Umin = -0.25f;
@@ -127,5 +128,31 @@ void PI_CONTROLLER_init(){
 }
 void CONTROLLER_init(){
     PI_CONTROLLER_init();
+}
+
+//
+// DCL REFGEN
+//
+//
+// myREFGEN0 variables
+//
+DCL_REFGEN myREFGEN0 = DCL_REFGEN_DEFAULTS;
+DCL_CSS myREFGEN0_css = DCL_CSS_DEFAULTS;
+void myREFGEN0_init(){
+    //
+    // myREFGEN0 settings
+    //
+    myREFGEN0.css = &myREFGEN0_css;
+    DCL_SET_CONTROLLER_PERIOD(&myREFGEN0,0.00001);
+    DCL_resetRefgen(&myREFGEN0);
+    myREFGEN0.mode = REFGEN_STATIC;
+    myREFGEN0.umax = 120;
+    myREFGEN0.umin = 0;
+    DCL_setRefgenFreq(&myREFGEN0, 1000, 0);
+    DCL_setRefgenAmpl(&myREFGEN0, 10, 0);
+    DCL_setRefgenRamp(&myREFGEN0, 0, 0);
+}
+void REFGEN_init(){
+    myREFGEN0_init();
 }
 

@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS
+CG_TOOL_ROOT := D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS
 
 GEN_OPTS__FLAG := --cmd_file="syscfg/board.opt" --cmd_file="syscfg/device_cmd.opt" --cmd_file="syscfg/c2000ware_libraries.opt" 
 GEN_CMDS__FLAG := -l"syscfg/device_cmd.cmd" 
@@ -157,7 +157,7 @@ all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 DAB_500W.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcrc -Ooff --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"DAB_500W.map" --heap_size=0x100 --stack_size=0x200 --warn_sections -i"D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/lib" -i"D:/ti/c2000/C2000Ware_5_04_00_00" -i"D:/ti/workspace/DAB_500W/CPU1_FLASH/syscfg" -i"D:/ti/ccs1250/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="DAB_500W_linkInfo.xml" --entry_point=code_start --rom_model -o "DAB_500W.out" $(ORDERED_OBJS)
+	"D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/bin/cl2000" --cmd_file="syscfg/device_cmd.opt"  -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcrc -Ooff --advice:performance=all --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"DAB_500W.map" --heap_size=0x100 --stack_size=0x200 --warn_sections -i"D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/lib" -i"D:/ti/c2000/C2000Ware_5_04_00_00" -i"F:/BaiduNetdiskDownload/workspace/DAB_500W/CPU1_FLASH/syscfg" -i"D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="DAB_500W_linkInfo.xml" --entry_point=code_start --rom_model -o "DAB_500W.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -174,9 +174,9 @@ clean:
 
 post-build:
 	-echo "========= Build of the CLB simulation has moved to the CLB Tool. Click the '?' icon by the _Generate CLB Simulation File_ enable for more details (located in the Global Parameters of the Tile Design SysConfig module) ============="
-	-if 0 == 1  D:/ti/ccs1250/ccs/tools/node/node.exe "D:/ti/c2000/C2000Ware_5_04_00_00/utilities/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "D:/ti/c2000/C2000Ware_5_04_00_00/utilities/clb_tool/clb_syscfg/" "D:/ti/workspace/DAB_500W/CPU1_FLASH/syscfg" "D:/ti/workspace/DAB_500W/CPU1_FLASH/syscfg/clb.dot"
-	-if 0 == 1  mkdir "D:/ti/workspace/DAB_500W/CPU1_FLASH/diagrams"
-	-if 0 == 1  D:/ti/ccs1250/ccs/tools/node/node.exe "D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/.meta/generate_diagrams.js" "D:/ti/c2000/C2000Ware_5_04_00_00" "D:/ti/workspace/DAB_500W/CPU1_FLASH/diagrams" "D:/ti/workspace/DAB_500W/CPU1_FLASH/syscfg"
+	-if 0 == 1  D:/ti/ccs1281/ccs/tools/node/node.exe "D:/ti/c2000/C2000Ware_5_04_00_00/utilities/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "D:/ti/c2000/C2000Ware_5_04_00_00/utilities/clb_tool/clb_syscfg/" "F:/BaiduNetdiskDownload/workspace/DAB_500W/CPU1_FLASH/syscfg" "F:/BaiduNetdiskDownload/workspace/DAB_500W/CPU1_FLASH/syscfg/clb.dot"
+	-if 0 == 1  mkdir "F:/BaiduNetdiskDownload/workspace/DAB_500W/CPU1_FLASH/diagrams"
+	-if 0 == 1  D:/ti/ccs1281/ccs/tools/node/node.exe "D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/.meta/generate_diagrams.js" "D:/ti/c2000/C2000Ware_5_04_00_00" "F:/BaiduNetdiskDownload/workspace/DAB_500W/CPU1_FLASH/diagrams" "F:/BaiduNetdiskDownload/workspace/DAB_500W/CPU1_FLASH/syscfg"
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -8,6 +8,7 @@
 void CMD_RAM_init();
 #endif
 #ifdef CMD_FLASH
+extern COPY_TABLE copyTable_dclfuncs_FLASH;
 void CMD_FLASH_init();
 #endif
 

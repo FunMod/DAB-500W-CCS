@@ -6,7 +6,7 @@
 //
 //#############################################################################
 // $Copyright:
-// Copyright (C) 2024 Texas Instruments Incorporated - http://www.ti.com
+// Copyright (C) 2025 Texas Instruments Incorporated - http://www.ti.com
 //
 // Redistribution and use in source and binary forms, with or without 
 // modification, are permitted provided that the following conditions 
@@ -47,7 +47,7 @@
 //
 //*****************************************************************************
 //
-// Input Clock to SYSPLL (OSCCLK)	= 10 MHz    (INTOSC2 provides OSCCLK)
+// Input Clock to SYSPLL (OSCCLK)	= 20 MHz    (XTAL provides OSCCLK)
 //
 //##### SYSPLL ENABLED #####
 //
@@ -63,17 +63,17 @@
 //
 //*****************************************************************************
 //
-//	Input Clock to SYSPLL (OSCCLK) = INTOSC2 = 10 MHz
+//	Input Clock to SYSPLL (OSCCLK) = XTAL = 20 MHz
 //
-#define DEVICE_OSCSRC_FREQ          10000000U
+#define DEVICE_OSCSRC_FREQ          20000000U
 //
 // Define to pass to SysCtl_setClock(). Will configure the clock as follows:
 // SYSPLL ENABLED
-// SYSCLK = 120 MHz = 10 MHz (OSCCLK) * 24 (IMULT) / (1 (REFDIV) * 1 (ODIV) * 2 (SYSCLKDIVSEL))
-#define DEVICE_SYSCLK_FREQ          ((DEVICE_OSCSRC_FREQ * 24) / (1 * 1 * 2))
+// SYSCLK = 120 MHz = 20 MHz (OSCCLK) * 24 (IMULT) / (2 (REFDIV) * 1 (ODIV) * 2 (SYSCLKDIVSEL))
+#define DEVICE_SYSCLK_FREQ          ((DEVICE_OSCSRC_FREQ * 24) / (2 * 1 * 2))
 //
-#define DEVICE_SETCLOCK_CFG         (SYSCTL_OSCSRC_OSC2  | SYSCTL_IMULT(24) | \
-									 SYSCTL_REFDIV(1) | SYSCTL_ODIV(1)| \
+#define DEVICE_SETCLOCK_CFG         (SYSCTL_OSCSRC_XTAL  | SYSCTL_IMULT(24) | \
+									 SYSCTL_REFDIV(2) | SYSCTL_ODIV(1)| \
 									 SYSCTL_SYSDIV(2) | SYSCTL_PLL_ENABLE | \
 									 SYSCTL_DCC_BASE_0)
 									 
