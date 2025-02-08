@@ -3,7 +3,5 @@
 #**************************************************
 Debug/
 .launches/
-.settings/
-.ccsproject
-.cproject
-.project
+/CPU1_FLASH/
+/CPU1_RAM/
