@@ -3,5 +3,5 @@
 #**************************************************
 Debug/
 .launches/
-/CPU1_FLASH/
-/CPU1_RAM/
+CPU1_FLASH/
+CPU1_RAM/
