@@ -1,5 +1,6 @@
 "./DAB_500W.obj"
 "./DAB_500W_cla_tasks.obj"
+"./DCL_PI_L1.obj"
 "./syscfg/board.obj"
 "./syscfg/device.obj"
 "./syscfg/device_cmd.obj"

@@ -77,6 +77,18 @@ void PinMux_init()
 	//
 	// ANALOG -> myANALOGPinMux0 Pinmux
 	//
+	// Analog PinMux for A10/B1/C10
+	GPIO_setPinConfig(GPIO_230_GPIO230);
+	// AIO -> Analog mode selected
+	GPIO_setAnalogMode(230, GPIO_ANALOG_ENABLED);
+	// Analog PinMux for A6
+	GPIO_setPinConfig(GPIO_228_GPIO228);
+	// AIO -> Analog mode selected
+	GPIO_setAnalogMode(228, GPIO_ANALOG_ENABLED);
+	// Analog PinMux for B11
+	GPIO_setPinConfig(GPIO_251_GPIO251);
+	// AIO -> Analog mode selected
+	GPIO_setAnalogMode(251, GPIO_ANALOG_ENABLED);
 	// Analog PinMux for B2/C6
 	GPIO_setPinConfig(GPIO_226_GPIO226);
 	// AIO -> Analog mode selected
@@ -136,32 +148,69 @@ void PinMux_init()
 	GPIO_setPadConfig(myEPWM4_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(myEPWM4_EPWMB_GPIO, GPIO_QUAL_SYNC);
 
+	//
+	// EPWM8 -> myEPWM5 Pinmux
+	//
+	GPIO_setPinConfig(myEPWM5_EPWMA_PIN_CONFIG);
+	GPIO_setPadConfig(myEPWM5_EPWMA_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(myEPWM5_EPWMA_GPIO, GPIO_QUAL_SYNC);
+
+	GPIO_setPinConfig(myEPWM5_EPWMB_PIN_CONFIG);
+	GPIO_setPadConfig(myEPWM5_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(myEPWM5_EPWMB_GPIO, GPIO_QUAL_SYNC);
+
+	//
+	// EPWM6 -> myEPWM6 Pinmux
+	//
+	GPIO_setPinConfig(myEPWM6_EPWMA_PIN_CONFIG);
+	GPIO_setPadConfig(myEPWM6_EPWMA_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(myEPWM6_EPWMA_GPIO, GPIO_QUAL_SYNC);
+
+	GPIO_setPinConfig(myEPWM6_EPWMB_PIN_CONFIG);
+	GPIO_setPadConfig(myEPWM6_EPWMB_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(myEPWM6_EPWMB_GPIO, GPIO_QUAL_SYNC);
+
 	// GPIO31 -> myGPIO0 Pinmux
 	GPIO_setPinConfig(GPIO_31_GPIO31);
-	// GPIO41 -> REFGEN_IO Pinmux
+	// GPIO41 -> TEST_IO Pinmux
 	GPIO_setPinConfig(GPIO_41_GPIO41);
+	// GPIO47 -> TEST_IO1 Pinmux
+	GPIO_setPinConfig(GPIO_47_GPIO47);
+	// GPIO59 -> TEST_IO2 Pinmux
+	GPIO_setPinConfig(GPIO_59_GPIO59);
 	//
-	// SD1 -> mySDFM0 Pinmux
+	// SD1 -> DAB_IIN_SDFM Pinmux
 	//
-	GPIO_setPinConfig(mySDFM0_SDC1_PIN_CONFIG);
-	GPIO_setPadConfig(mySDFM0_SDC1_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(mySDFM0_SDC1_GPIO, GPIO_QUAL_SYNC);
+	GPIO_setPinConfig(DAB_IIN_SDFM_SDC1_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IIN_SDFM_SDC1_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IIN_SDFM_SDC1_GPIO, GPIO_QUAL_SYNC);
 
-	GPIO_setPinConfig(mySDFM0_SDD1_PIN_CONFIG);
-	GPIO_setPadConfig(mySDFM0_SDD1_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(mySDFM0_SDD1_GPIO, GPIO_QUAL_SYNC);
+	GPIO_setPinConfig(DAB_IIN_SDFM_SDD1_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IIN_SDFM_SDD1_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IIN_SDFM_SDD1_GPIO, GPIO_QUAL_SYNC);
 
-	GPIO_setPinConfig(mySDFM0_SDD2_PIN_CONFIG);
-	GPIO_setPadConfig(mySDFM0_SDD2_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(mySDFM0_SDD2_GPIO, GPIO_QUAL_SYNC);
+	GPIO_setPinConfig(DAB_IIN_SDFM_SDD2_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IIN_SDFM_SDD2_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IIN_SDFM_SDD2_GPIO, GPIO_QUAL_SYNC);
 
-	GPIO_setPinConfig(mySDFM0_SDD3_PIN_CONFIG);
-	GPIO_setPadConfig(mySDFM0_SDD3_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(mySDFM0_SDD3_GPIO, GPIO_QUAL_SYNC);
+	GPIO_setPinConfig(DAB_IIN_SDFM_SDD3_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IIN_SDFM_SDD3_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IIN_SDFM_SDD3_GPIO, GPIO_QUAL_SYNC);
 
-	GPIO_setPinConfig(mySDFM0_SDD4_PIN_CONFIG);
-	GPIO_setPadConfig(mySDFM0_SDD4_GPIO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(mySDFM0_SDD4_GPIO, GPIO_QUAL_SYNC);
+	GPIO_setPinConfig(DAB_IIN_SDFM_SDD4_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IIN_SDFM_SDD4_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IIN_SDFM_SDD4_GPIO, GPIO_QUAL_SYNC);
+
+	//
+	// SD2 -> DAB_IOUT_SDFM Pinmux
+	//
+	GPIO_setPinConfig(DAB_IOUT_SDFM_SDC1_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IOUT_SDFM_SDC1_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IOUT_SDFM_SDC1_GPIO, GPIO_QUAL_SYNC);
+
+	GPIO_setPinConfig(DAB_IOUT_SDFM_SDD1_PIN_CONFIG);
+	GPIO_setPadConfig(DAB_IOUT_SDFM_SDD1_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(DAB_IOUT_SDFM_SDD1_GPIO, GPIO_QUAL_SYNC);
 
 
 }
@@ -173,6 +222,7 @@ void PinMux_init()
 //*****************************************************************************
 void ADC_init(){
 	myADC0_init();
+	myADC1_init();
 }
 
 void myADC0_init(){
@@ -216,24 +266,186 @@ void myADC0_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 0
-	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
+	//	  	Trigger			: ADC_TRIGGER_EPWM1_SOCA
 	//	  	Channel			: ADC_CH_ADCIN2
 	//	 	Sample Window	: 9 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN2, 9U);
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM1_SOCA, ADC_CH_ADCIN2, 9U);
 	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
+	// Start of Conversion 1 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 1
+	//	  	Trigger			: ADC_TRIGGER_EPWM1_SOCA
+	//	  	Channel			: ADC_CH_ADCIN11
+	//	 	Sample Window	: 9 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC0_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM1_SOCA, ADC_CH_ADCIN11, 9U);
+	ADC_setInterruptSOCTrigger(myADC0_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
+	//
 	// ADC Interrupt 1 Configuration
-	// 		Source	: ADC_SOC_NUMBER0
+	// 		Source	: ADC_SOC_NUMBER1
 	// 		Interrupt Source: enabled
 	// 		Continuous Mode	: disabled
 	//
 	//
-	ADC_setInterruptSource(myADC0_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER0);
+	ADC_setInterruptSource(myADC0_BASE, ADC_INT_NUMBER1, ADC_SOC_NUMBER1);
 	ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
 	ADC_disableContinuousMode(myADC0_BASE, ADC_INT_NUMBER1);
 	ADC_enableInterrupt(myADC0_BASE, ADC_INT_NUMBER1);
+			
+	//
+	// PPB Configuration: Configure high and low limits detection for ADCPPB
+	//
+	// Post Processing Block 1 Configuration
+	// 		Configures a post-processing block (PPB) in the ADC.
+	// 		PPB Number				: 1
+	// 		SOC/EOC number			: 0
+	// 		Calibration Offset		: 0
+	// 		Reference Offset		: 2040
+	// 		Two's Complement		: Disabled
+	// 		Trip High Limit			: 0
+	// 		Trip Low Limit			: 0
+	// 		Clear PPB Event Flags	: Disabled
+	//
+	ADC_setupPPB(myADC0_BASE, ADC_PPB_NUMBER1, ADC_SOC_NUMBER0);
+	ADC_disablePPBEvent(myADC0_BASE, ADC_PPB_NUMBER1, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_disablePPBEventInterrupt(myADC0_BASE, ADC_PPB_NUMBER1, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_setPPBCalibrationOffset(myADC0_BASE, ADC_PPB_NUMBER1, 0);
+	ADC_setPPBReferenceOffset(myADC0_BASE, ADC_PPB_NUMBER1, 2040);
+	ADC_disablePPBTwosComplement(myADC0_BASE, ADC_PPB_NUMBER1);
+	ADC_setPPBTripLimits(myADC0_BASE, ADC_PPB_NUMBER1, 0, 0);
+	ADC_disablePPBEventCBCClear(myADC0_BASE, ADC_PPB_NUMBER1);
+	//
+	// Post Processing Block 2 Configuration
+	// 		Configures a post-processing block (PPB) in the ADC.
+	// 		PPB Number				: 2
+	// 		SOC/EOC number			: 1
+	// 		Calibration Offset		: 0
+	// 		Reference Offset		: 2048
+	// 		Two's Complement		: Disabled
+	// 		Trip High Limit			: 0
+	// 		Trip Low Limit			: 0
+	// 		Clear PPB Event Flags	: Disabled
+	//
+	ADC_setupPPB(myADC0_BASE, ADC_PPB_NUMBER2, ADC_SOC_NUMBER1);
+	ADC_disablePPBEvent(myADC0_BASE, ADC_PPB_NUMBER2, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_disablePPBEventInterrupt(myADC0_BASE, ADC_PPB_NUMBER2, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_setPPBCalibrationOffset(myADC0_BASE, ADC_PPB_NUMBER2, 0);
+	ADC_setPPBReferenceOffset(myADC0_BASE, ADC_PPB_NUMBER2, 2048);
+	ADC_disablePPBTwosComplement(myADC0_BASE, ADC_PPB_NUMBER2);
+	ADC_setPPBTripLimits(myADC0_BASE, ADC_PPB_NUMBER2, 0, 0);
+	ADC_disablePPBEventCBCClear(myADC0_BASE, ADC_PPB_NUMBER2);
+}
+
+void myADC1_init(){
+	//
+	// ADC Initialization: Write ADC configurations and power up the ADC
+	//
+	// Set the analog voltage reference selection and ADC module's offset trims.
+	// This function sets the analog voltage reference to internal (with the reference voltage of 1.65V or 2.5V) or external for ADC
+	// which is same as ASysCtl APIs.
+	//
+	ADC_setVREF(myADC1_BASE, ADC_REFERENCE_INTERNAL, ADC_REFERENCE_3_3V);
+	//
+	// Configures the analog-to-digital converter module prescaler.
+	//
+	ADC_setPrescaler(myADC1_BASE, ADC_CLK_DIV_2_0);
+	//
+	// Sets the timing of the end-of-conversion pulse
+	//
+	ADC_setInterruptPulseMode(myADC1_BASE, ADC_PULSE_END_OF_CONV);
+	//
+	// Powers up the analog-to-digital converter core.
+	//
+	ADC_enableConverter(myADC1_BASE);
+	//
+	// Delay for 1ms to allow ADC time to power up
+	//
+	DEVICE_DELAY_US(5000);
+	//
+	// SOC Configuration: Setup ADC EPWM channel and trigger settings
+	//
+	// Disables SOC burst mode.
+	//
+	ADC_disableBurstMode(myADC1_BASE);
+	//
+	// Sets the priority mode of the SOCs.
+	//
+	ADC_setSOCPriority(myADC1_BASE, ADC_PRI_ALL_ROUND_ROBIN);
+	//
+	// Start of Conversion 0 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 0
+	//	  	Trigger			: ADC_TRIGGER_EPWM1_SOCB
+	//	  	Channel			: ADC_CH_ADCIN10
+	//	 	Sample Window	: 9 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM1_SOCB, ADC_CH_ADCIN10, 9U);
+	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
+	//
+	// Start of Conversion 1 Configuration
+	//
+	//
+	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
+	// 	  	SOC number		: 1
+	//	  	Trigger			: ADC_TRIGGER_EPWM1_SOCB
+	//	  	Channel			: ADC_CH_ADCIN6
+	//	 	Sample Window	: 9 SYSCLK cycles
+	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
+	//
+	ADC_setupSOC(myADC1_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM1_SOCB, ADC_CH_ADCIN6, 9U);
+	ADC_setInterruptSOCTrigger(myADC1_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
+			
+	//
+	// PPB Configuration: Configure high and low limits detection for ADCPPB
+	//
+	// Post Processing Block 1 Configuration
+	// 		Configures a post-processing block (PPB) in the ADC.
+	// 		PPB Number				: 1
+	// 		SOC/EOC number			: 0
+	// 		Calibration Offset		: 0
+	// 		Reference Offset		: 2068
+	// 		Two's Complement		: Disabled
+	// 		Trip High Limit			: 0
+	// 		Trip Low Limit			: 0
+	// 		Clear PPB Event Flags	: Disabled
+	//
+	ADC_setupPPB(myADC1_BASE, ADC_PPB_NUMBER1, ADC_SOC_NUMBER0);
+	ADC_disablePPBEvent(myADC1_BASE, ADC_PPB_NUMBER1, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_disablePPBEventInterrupt(myADC1_BASE, ADC_PPB_NUMBER1, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_setPPBCalibrationOffset(myADC1_BASE, ADC_PPB_NUMBER1, 0);
+	ADC_setPPBReferenceOffset(myADC1_BASE, ADC_PPB_NUMBER1, 2068);
+	ADC_disablePPBTwosComplement(myADC1_BASE, ADC_PPB_NUMBER1);
+	ADC_setPPBTripLimits(myADC1_BASE, ADC_PPB_NUMBER1, 0, 0);
+	ADC_disablePPBEventCBCClear(myADC1_BASE, ADC_PPB_NUMBER1);
+	//
+	// Post Processing Block 2 Configuration
+	// 		Configures a post-processing block (PPB) in the ADC.
+	// 		PPB Number				: 2
+	// 		SOC/EOC number			: 1
+	// 		Calibration Offset		: 0
+	// 		Reference Offset		: 2068
+	// 		Two's Complement		: Disabled
+	// 		Trip High Limit			: 0
+	// 		Trip Low Limit			: 0
+	// 		Clear PPB Event Flags	: Disabled
+	//
+	ADC_setupPPB(myADC1_BASE, ADC_PPB_NUMBER2, ADC_SOC_NUMBER1);
+	ADC_disablePPBEvent(myADC1_BASE, ADC_PPB_NUMBER2, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_disablePPBEventInterrupt(myADC1_BASE, ADC_PPB_NUMBER2, (ADC_EVT_TRIPHI | ADC_EVT_TRIPLO | ADC_EVT_ZERO));
+	ADC_setPPBCalibrationOffset(myADC1_BASE, ADC_PPB_NUMBER2, 0);
+	ADC_setPPBReferenceOffset(myADC1_BASE, ADC_PPB_NUMBER2, 2068);
+	ADC_disablePPBTwosComplement(myADC1_BASE, ADC_PPB_NUMBER2);
+	ADC_setPPBTripLimits(myADC1_BASE, ADC_PPB_NUMBER2, 0, 0);
+	ADC_disablePPBEventCBCClear(myADC1_BASE, ADC_PPB_NUMBER2);
 }
 
 
@@ -276,7 +488,7 @@ void myCLA0_init(){
     // CLA Task 1
     //
     CLA_mapTaskVector(myCLA0_BASE, CLA_MVECT_1, (uint16_t)&Cla1Task1);
-    CLA_setTriggerSource(CLA_TASK_1, CLA_TRIGGER_SOFTWARE);
+    CLA_setTriggerSource(CLA_TASK_1, CLA_TRIGGER_ADCB1);
 #pragma diag_warning=770
 	//
     // Enable the IACK instruction to start a task on CLA in software
@@ -374,6 +586,7 @@ void EPWM_init(){
     EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_C, 150);	
     EPWM_enableGlobalLoadRegisters(myEPWM0_BASE, EPWM_GL_REGISTER_CMPC);	
     EPWM_setupEPWMLinks(myEPWM0_BASE, EPWM_LINK_WITH_EPWM_1, EPWM_LINK_COMP_C);	
+    EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_D, 300);	
     EPWM_enableGlobalLoadRegisters(myEPWM0_BASE, EPWM_GL_REGISTER_AQCTLA_AQCTLA2);	
     EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
     EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
@@ -396,6 +609,12 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(myEPWM0_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_disableFallingEdgeDelayCountShadowLoadMode(myEPWM0_BASE);	
     EPWM_setFallingEdgeDelayCount(myEPWM0_BASE, 12);	
+    EPWM_enableADCTrigger(myEPWM0_BASE, EPWM_SOC_A);	
+    EPWM_setADCTriggerSource(myEPWM0_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_ZERO);	
+    EPWM_setADCTriggerEventPrescale(myEPWM0_BASE, EPWM_SOC_A, 1);	
+    EPWM_enableADCTrigger(myEPWM0_BASE, EPWM_SOC_B);	
+    EPWM_setADCTriggerSource(myEPWM0_BASE, EPWM_SOC_B, EPWM_SOC_TBCTR_D_CMPA);	
+    EPWM_setADCTriggerEventPrescale(myEPWM0_BASE, EPWM_SOC_B, 1);	
     EPWM_enableGlobalLoad(myEPWM1_BASE);	
     EPWM_enableGlobalLoadOneShotMode(myEPWM1_BASE);	
     EPWM_setGlobalLoadOneShotLatch(myEPWM1_BASE);	
@@ -481,9 +700,6 @@ void EPWM_init(){
     HRPWM_setFallingEdgeDeadBandDelayInput(myEPWM2_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     HRPWM_disableFallingEdgeDelayCountShadowLoadMode(myEPWM2_BASE);	
     HRPWM_setFallingEdgeDelayCount(myEPWM2_BASE, 12);	
-    HRPWM_enableADCTrigger(myEPWM2_BASE, EPWM_SOC_A);	
-    HRPWM_setADCTriggerSource(myEPWM2_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_U_CMPD);	
-    HRPWM_setADCTriggerEventPrescale(myEPWM2_BASE, EPWM_SOC_A, 1);	
     HRPWM_enableAutoConversion(myEPWM2_BASE);	
     HRPWM_setMEPEdgeSelect(myEPWM2_BASE, HRPWM_CHANNEL_A, HRPWM_MEP_CTRL_RISING_AND_FALLING_EDGE);	
     HRPWM_setCounterCompareShadowLoadEvent(myEPWM2_BASE, HRPWM_CHANNEL_A, HRPWM_LOAD_ON_CNTR_ZERO_PERIOD);	
@@ -540,6 +756,7 @@ void EPWM_init(){
     EPWM_disablePhaseShiftLoad(myEPWM4_BASE);	
     EPWM_setPhaseShift(myEPWM4_BASE, 0);	
     EPWM_setSyncInPulseSource(myEPWM4_BASE, EPWM_SYNC_IN_PULSE_SRC_DISABLE);	
+    EPWM_enableSyncOutPulseSource(myEPWM4_BASE, EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO);	
     EPWM_setCounterCompareValue(myEPWM4_BASE, EPWM_COUNTER_COMPARE_A, 3);	
     EPWM_setCounterCompareShadowLoadMode(myEPWM4_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
     EPWM_setCounterCompareValue(myEPWM4_BASE, EPWM_COUNTER_COMPARE_B, 3);	
@@ -562,6 +779,67 @@ void EPWM_init(){
     EPWM_setDeadBandDelayMode(myEPWM4_BASE, EPWM_DB_FED, true);	
     EPWM_setFallingEdgeDelayCountShadowLoadMode(myEPWM4_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_disableFallingEdgeDelayCountShadowLoadMode(myEPWM4_BASE);	
+    EPWM_setEmulationMode(myEPWM5_BASE, EPWM_EMULATION_FREE_RUN);	
+    EPWM_setClockPrescaler(myEPWM5_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
+    EPWM_setTimeBasePeriod(myEPWM5_BASE, 1200);	
+    EPWM_setTimeBaseCounter(myEPWM5_BASE, 0);	
+    EPWM_setTimeBaseCounterMode(myEPWM5_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
+    EPWM_disablePhaseShiftLoad(myEPWM5_BASE);	
+    EPWM_setPhaseShift(myEPWM5_BASE, 0);	
+    EPWM_setCounterCompareValue(myEPWM5_BASE, EPWM_COUNTER_COMPARE_A, 600);	
+    EPWM_setCounterCompareShadowLoadMode(myEPWM5_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setCounterCompareValue(myEPWM5_BASE, EPWM_COUNTER_COMPARE_B, 0);	
+    EPWM_setCounterCompareShadowLoadMode(myEPWM5_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    EPWM_setActionQualifierAction(myEPWM5_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    EPWM_setRisingEdgeDelayCountShadowLoadMode(myEPWM5_BASE, EPWM_RED_LOAD_ON_CNTR_ZERO);	
+    EPWM_disableRisingEdgeDelayCountShadowLoadMode(myEPWM5_BASE);	
+    EPWM_setFallingEdgeDelayCountShadowLoadMode(myEPWM5_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
+    EPWM_disableFallingEdgeDelayCountShadowLoadMode(myEPWM5_BASE);	
+    EPWM_enableInterrupt(myEPWM5_BASE);	
+    EPWM_setInterruptSource(myEPWM5_BASE, EPWM_INT_TBCTR_U_CMPA);	
+    EPWM_setInterruptEventCount(myEPWM5_BASE, 1);	
+    EPWM_setEmulationMode(myEPWM6_BASE, EPWM_EMULATION_FREE_RUN);	
+    EPWM_setClockPrescaler(myEPWM6_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
+    EPWM_setTimeBasePeriod(myEPWM6_BASE, 3);	
+    EPWM_setTimeBaseCounter(myEPWM6_BASE, 0);	
+    EPWM_setTimeBaseCounterMode(myEPWM6_BASE, EPWM_COUNTER_MODE_UP_DOWN);	
+    EPWM_enablePhaseShiftLoad(myEPWM6_BASE);	
+    EPWM_setPhaseShift(myEPWM6_BASE, 1);	
+    EPWM_setSyncInPulseSource(myEPWM6_BASE, EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM5);	
+    EPWM_setCounterCompareValue(myEPWM6_BASE, EPWM_COUNTER_COMPARE_A, 3);	
+    EPWM_setCounterCompareShadowLoadMode(myEPWM6_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setCounterCompareValue(myEPWM6_BASE, EPWM_COUNTER_COMPARE_B, 3);	
+    EPWM_setCounterCompareShadowLoadMode(myEPWM6_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);	
+    EPWM_setActionQualifierAction(myEPWM6_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);	
+    EPWM_setDeadBandDelayPolarity(myEPWM6_BASE, EPWM_DB_FED, EPWM_DB_POLARITY_ACTIVE_LOW);	
+    EPWM_setDeadBandDelayMode(myEPWM6_BASE, EPWM_DB_RED, true);	
+    EPWM_setRisingEdgeDelayCountShadowLoadMode(myEPWM6_BASE, EPWM_RED_LOAD_ON_CNTR_ZERO);	
+    EPWM_disableRisingEdgeDelayCountShadowLoadMode(myEPWM6_BASE);	
+    EPWM_setDeadBandDelayMode(myEPWM6_BASE, EPWM_DB_FED, true);	
+    EPWM_setFallingEdgeDelayCountShadowLoadMode(myEPWM6_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
+    EPWM_disableFallingEdgeDelayCountShadowLoadMode(myEPWM6_BASE);	
 }
 
 //*****************************************************************************
@@ -571,7 +849,9 @@ void EPWM_init(){
 //*****************************************************************************
 void GPIO_init(){
 	myGPIO0_init();
-	REFGEN_IO_init();
+	TEST_IO_init();
+	TEST_IO1_init();
+	TEST_IO2_init();
 }
 
 void myGPIO0_init(){
@@ -581,11 +861,26 @@ void myGPIO0_init(){
 	GPIO_setDirectionMode(myGPIO0, GPIO_DIR_MODE_OUT);
 	GPIO_setControllerCore(myGPIO0, GPIO_CORE_CPU1);
 }
-void REFGEN_IO_init(){
-	GPIO_setPadConfig(REFGEN_IO, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(REFGEN_IO, GPIO_QUAL_SYNC);
-	GPIO_setDirectionMode(REFGEN_IO, GPIO_DIR_MODE_OUT);
-	GPIO_setControllerCore(REFGEN_IO, GPIO_CORE_CPU1);
+void TEST_IO_init(){
+	GPIO_writePin(TEST_IO, 1);
+	GPIO_setPadConfig(TEST_IO, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(TEST_IO, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(TEST_IO, GPIO_DIR_MODE_OUT);
+	GPIO_setControllerCore(TEST_IO, GPIO_CORE_CPU1_CLA1);
+}
+void TEST_IO1_init(){
+	GPIO_writePin(TEST_IO1, 1);
+	GPIO_setPadConfig(TEST_IO1, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(TEST_IO1, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(TEST_IO1, GPIO_DIR_MODE_OUT);
+	GPIO_setControllerCore(TEST_IO1, GPIO_CORE_CPU1);
+}
+void TEST_IO2_init(){
+	GPIO_writePin(TEST_IO2, 1);
+	GPIO_setPadConfig(TEST_IO2, GPIO_PIN_TYPE_STD);
+	GPIO_setQualificationMode(TEST_IO2, GPIO_QUAL_SYNC);
+	GPIO_setDirectionMode(TEST_IO2, GPIO_DIR_MODE_OUT);
+	GPIO_setControllerCore(TEST_IO2, GPIO_CORE_CPU1);
 }
 
 //*****************************************************************************
@@ -600,15 +895,10 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_myCLA01, &cla1Isr1);
 	Interrupt_enable(INT_myCLA01);
 	
-	// Interrupt Settings for INT_myADC0_1
+	// Interrupt Settings for INT_myEPWM5
 	// ISR need to be defined for the registered interrupts
-	Interrupt_register(INT_myADC0_1, &INT_myADC0_1_ISR);
-	Interrupt_enable(INT_myADC0_1);
-	
-	// Interrupt Settings for INT_mySDFM0_DR1
-	// ISR need to be defined for the registered interrupts
-	Interrupt_register(INT_mySDFM0_DR1, &INT_mySDFM0_DR1_ISR);
-	Interrupt_enable(INT_mySDFM0_DR1);
+	Interrupt_register(INT_myEPWM5, &INT_myEPWM5_ISR);
+	Interrupt_enable(INT_myEPWM5);
 }
 //*****************************************************************************
 //
@@ -629,9 +919,11 @@ void MEMCFG_init(){
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS0, MEMCFG_LSRAMCONTROLLER_CPU_CLA1);
 	MemCfg_setCLAMemType(MEMCFG_SECT_LS0, MEMCFG_CLA_MEM_PROGRAM);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS1, MEMCFG_LSRAMCONTROLLER_CPU_CLA1);
-	MemCfg_setCLAMemType(MEMCFG_SECT_LS1, MEMCFG_CLA_MEM_DATA);
-	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS2, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
-	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS3, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
+	MemCfg_setCLAMemType(MEMCFG_SECT_LS1, MEMCFG_CLA_MEM_PROGRAM);
+	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS2, MEMCFG_LSRAMCONTROLLER_CPU_CLA1);
+	MemCfg_setCLAMemType(MEMCFG_SECT_LS2, MEMCFG_CLA_MEM_PROGRAM);
+	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS3, MEMCFG_LSRAMCONTROLLER_CPU_CLA1);
+	MemCfg_setCLAMemType(MEMCFG_SECT_LS3, MEMCFG_CLA_MEM_DATA);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS4, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS5, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
 	MemCfg_setLSRAMControllerSel(MEMCFG_SECT_LS6, MEMCFG_LSRAMCONTROLLER_CPU_ONLY);
@@ -675,46 +967,60 @@ void MEMCFG_init(){
 //*****************************************************************************
 void SD_init() 
 {
-	mySDFM0_init();
+	DAB_IIN_SDFM_init();
+	DAB_IOUT_SDFM_init();
 }
 //****************************************
-// mySDFM0 initialization
+// DAB_IIN_SDFM initialization
 //****************************************
-void mySDFM0_init(void)
+void DAB_IIN_SDFM_init(void)
 {
 	//
 	// Set modulator clock mode
 	//
-	SDFM_setupModulatorClock(mySDFM0_BASE, SDFM_FILTER_1, SDFM_MODULATOR_CLK_EQUAL_DATA_RATE);
+	SDFM_setupModulatorClock(DAB_IIN_SDFM_BASE, SDFM_FILTER_1, SDFM_MODULATOR_CLK_EQUAL_DATA_RATE);
 	//
 	// Set Input Synchronizer
 	//
-	SDFM_enableSynchronizer(mySDFM0_BASE, SDFM_FILTER_1, SDFM_CLOCK_SYNCHRONIZER | SDFM_DATA_SYNCHRONIZER);
+	SDFM_enableSynchronizer(DAB_IIN_SDFM_BASE, SDFM_FILTER_1, SDFM_CLOCK_SYNCHRONIZER | SDFM_DATA_SYNCHRONIZER);
 	//
 	// Selects clock source for SDFM channels
 	//
-	SDFM_selectClockSource(mySDFM0_BASE, SDFM_FILTER_1, SDFM_CLK_SOURCE_SD1_CLK);
+	SDFM_selectClockSource(DAB_IIN_SDFM_BASE, SDFM_FILTER_1, SDFM_CLK_SOURCE_SD1_CLK);
 	//
 	// Configure data filter settings
 	//
-	SDFM_configDataFilterFIFO(mySDFM0_BASE, (SDFM_FILTER_1 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(128)), (SDFM_FILTER_ENABLE | SDFM_DATA_FORMAT_16_BIT | SDFM_SHIFT_VALUE(7) | SDFM_SET_FIFO_LEVEL(16)));
+	SDFM_configDataFilter(DAB_IIN_SDFM_BASE, (SDFM_FILTER_1 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(64)), (SDFM_FILTER_ENABLE | SDFM_DATA_FORMAT_32_BIT | SDFM_SHIFT_VALUE(4)));	  
 	//
 	// Main Filter Enable
 	//
-    SDFM_enableMainFilter(mySDFM0_BASE);
+    SDFM_enableMainFilter(DAB_IIN_SDFM_BASE);
+} 	
+//****************************************
+// DAB_IOUT_SDFM initialization
+//****************************************
+void DAB_IOUT_SDFM_init(void)
+{
 	//
-	// Configure SDFM interrupt source
+	// Set modulator clock mode
 	//
+	SDFM_setupModulatorClock(DAB_IOUT_SDFM_BASE, SDFM_FILTER_1, SDFM_MODULATOR_CLK_EQUAL_DATA_RATE);
 	//
-	// FILTER1 interrupt settings
+	// Set Input Synchronizer
 	//
-	SDFM_enableInterrupt(mySDFM0_BASE, SDFM_FILTER_1, SDFM_FIFO_INTERRUPT);
-	SDFM_setDataReadyInterruptSource(mySDFM0_BASE, SDFM_FILTER_1, SDFM_DATA_READY_SOURCE_FIFO);
-	DEVICE_DELAY_US(39U);
+	SDFM_enableSynchronizer(DAB_IOUT_SDFM_BASE, SDFM_FILTER_1, SDFM_CLOCK_SYNCHRONIZER | SDFM_DATA_SYNCHRONIZER);
 	//
-	// Main Interrupt Enable
+	// Selects clock source for SDFM channels
 	//
-	SDFM_enableMainInterrupt(mySDFM0_BASE);
+	SDFM_selectClockSource(DAB_IOUT_SDFM_BASE, SDFM_FILTER_1, SDFM_CLK_SOURCE_SD1_CLK);
+	//
+	// Configure data filter settings
+	//
+	SDFM_configDataFilter(DAB_IOUT_SDFM_BASE, (SDFM_FILTER_1 | SDFM_FILTER_SINC_3 | SDFM_SET_OSR(64)), (SDFM_FILTER_ENABLE | SDFM_DATA_FORMAT_32_BIT | SDFM_SHIFT_VALUE(4)));	  
+	//
+	// Main Filter Enable
+	//
+    SDFM_enableMainFilter(DAB_IOUT_SDFM_BASE);
 } 	
 
 //*****************************************************************************

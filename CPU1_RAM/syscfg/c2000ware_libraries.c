@@ -143,7 +143,7 @@ void myREFGEN0_init(){
     // myREFGEN0 settings
     //
     myREFGEN0.css = &myREFGEN0_css;
-    DCL_SET_CONTROLLER_PERIOD(&myREFGEN0,0.00001);
+    DCL_SET_CONTROLLER_PERIOD(&myREFGEN0,0.00002);
     DCL_resetRefgen(&myREFGEN0);
     myREFGEN0.mode = REFGEN_STATIC;
     myREFGEN0.umax = 120;

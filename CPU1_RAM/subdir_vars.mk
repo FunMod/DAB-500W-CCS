@@ -15,6 +15,7 @@ LIB_SRCS += \
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/ccs/Debug/driverlib.lib 
 
 ASM_SRCS += \
+../DCL_PI_L1.asm \
 D:/ti/c2000/C2000Ware_5_04_00_00/device_support/f28003x/common/source/f28003x_codestartbranch.asm \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_clamp_C1.asm \
 D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF11_C1.asm \
@@ -74,6 +75,7 @@ GEN_OPTS += \
 OBJS += \
 ./DAB_500W.obj \
 ./DAB_500W_cla_tasks.obj \
+./DCL_PI_L1.obj \
 ./syscfg/board.obj \
 ./syscfg/device.obj \
 ./syscfg/device_cmd.obj \
@@ -96,6 +98,7 @@ OBJS += \
 ./DCL_PID_C4.obj 
 
 ASM_DEPS += \
+./DCL_PI_L1.d \
 ./f28003x_codestartbranch.d \
 ./DCL_clamp_C1.d \
 ./DCL_DF11_C1.d \
@@ -132,6 +135,7 @@ GEN_MISC_DIRS__QUOTED += \
 OBJS__QUOTED += \
 "DAB_500W.obj" \
 "DAB_500W_cla_tasks.obj" \
+"DCL_PI_L1.obj" \
 "syscfg\board.obj" \
 "syscfg\device.obj" \
 "syscfg\device_cmd.obj" \
@@ -189,6 +193,7 @@ CLA_DEPS__QUOTED += \
 "DAB_500W_cla_tasks.d" 
 
 ASM_DEPS__QUOTED += \
+"DCL_PI_L1.d" \
 "f28003x_codestartbranch.d" \
 "DCL_clamp_C1.d" \
 "DCL_DF11_C1.d" \
@@ -213,10 +218,8 @@ C_SRCS__QUOTED += \
 "./syscfg/c2000ware_libraries.c" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_error.c" 
 
-SYSCFG_SRCS__QUOTED += \
-"../c2000.syscfg" 
-
 ASM_SRCS__QUOTED += \
+"../DCL_PI_L1.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/device_support/f28003x/common/source/f28003x_codestartbranch.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_clamp_C1.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_DF11_C1.asm" \
@@ -232,5 +235,8 @@ ASM_SRCS__QUOTED += \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PI_C7.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C1.asm" \
 "D:/ti/c2000/C2000Ware_5_04_00_00/libraries/control/DCL/c28/source/DCL_PID_C4.asm" 
+
+SYSCFG_SRCS__QUOTED += \
+"../c2000.syscfg" 
 
 

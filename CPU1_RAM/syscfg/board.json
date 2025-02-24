@@ -5,12 +5,8 @@
             "interruptHandler": "cla1Isr1"
         },
         {
-            "interruptName": "INT_myADC0_1",
-            "interruptHandler": "INT_myADC0_1_ISR"
-        },
-        {
-            "interruptName": "INT_mySDFM0_DR1",
-            "interruptHandler": "INT_mySDFM0_DR1_ISR"
+            "interruptName": "INT_myEPWM5",
+            "interruptHandler": "INT_myEPWM5_ISR"
         }
     ]
 }

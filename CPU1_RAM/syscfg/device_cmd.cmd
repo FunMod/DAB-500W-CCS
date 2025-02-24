@@ -87,12 +87,12 @@ SECTIONS
     //
     .reset               : >  RESET, TYPE = DSECT /* not used, */
     codestart            : >  0x000000
-    .text                : >> RAMGS3 | RAMLS3 | RAMLS4 | RAMLS5 | RAMLS6 | RAMLS7
+    .text                : >> RAMGS1 | RAMGS3 | RAMLS4 | RAMLS5 | RAMLS6 | RAMLS7
     .TI.ramfunc          : >  RAMM0
     .cinit               : >  RAMM0
     .stack               : >  RAMM1
     .init_array          : >  RAMM0
-    .bss                 : >  RAMLS5
+    .bss                 : >  RAMLS7
     .const               : >  RAMGS2
     .data                : >  RAMGS0
     .switch              : >  RAMM0
@@ -101,18 +101,19 @@ SECTIONS
     //
     // CLA Sections
     //
-    Cla1Prog             : >  RAMLS0
-    .const_cla           : >  RAMLS1
-    .scratchpad          : >  RAMLS1
-    .bss_cla             : >  RAMLS1
+    Cla1Prog             : >> RAMLS0 | RAMLS1 | RAMLS2
+    .const_cla           : >  RAMLS3
+    .scratchpad          : >  RAMLS3
+    .bss_cla             : >  RAMLS3
     cla1ToCpuMsgRAM      : >  CLATOCPU_MSGRAM
     cpuToCla1MsgRAM      : >  CPUTOCLA_MSGRAM
 
     //
     // User Sections
     //
-    dclfuncs_RAM { *(dclfuncs) }    >  RAMGS1,
+    dclfuncs_RAM { *(dclfuncs) }    >  RAMLS3,
                               ALIGN(2)
+    cla_shared { *(cla_shared) }    >  RAMLS3
 
 }
 
@@ -202,7 +203,7 @@ SECTIONS
     .text                : >> FLASH_BANK0_SEC2 | FLASH_BANK0_SEC3 | FLASH_BANK0_SEC4,
                               ALIGN(8)
     .TI.ramfunc          :    LOAD >  FLASH_BANK0_SEC1,
-                              RUN  >  RAMLS3,
+                              RUN  >  RAMLS5,
                               TABLE(BINIT),
                               ALIGN(8)
     .binit               : >  FLASH_BANK0_SEC1,

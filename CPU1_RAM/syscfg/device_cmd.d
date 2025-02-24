@@ -13,7 +13,7 @@ syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/
 syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_types.h
 syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint.h
 syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h
-syscfg/device_cmd.obj: F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h
+syscfg/device_cmd.obj: D:/ti/workspace_v12/DAB_500W/device/driverlib.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h
 syscfg/device_cmd.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h
 syscfg/device_cmd.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
@@ -133,7 +133,7 @@ D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/machine/_stdint
 
 D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/sys/_stdint.h:
 
-F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h:
+D:/ti/workspace_v12/DAB_500W/device/driverlib.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h:
 

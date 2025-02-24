@@ -4,10 +4,99 @@
  *  Created on: 2025年2月1日
  *      Author: Admin
  */
-#include "driverlib.h"
-#include "board.h"
 #include "DAB_500W_shared.h"
+#pragma FUNC_ALWAYS_INLINE(DAB_readSensedSignals)
+static inline void DAB_readSensedSignals()
+{
+    sense_data.vin = DAB_VIN_ADC_FACTOR_V *
+            ADC_readPPBResult(ADCBRESULT_BASE, ADC_PPB_NUMBER2);
+    sense_data.vout = DAB_VOUT_ADC_FACTOR_V *
+            ADC_readPPBResult(ADCBRESULT_BASE, ADC_PPB_NUMBER1);
+
+    sense_data.iin = (float32_t)((int32_t)
+            SDFM_getFilterData(DAB_IIN_SDFM_BASE,
+                               SDFM_FILTER_1)*DAB_SDFM_PU_SCALE_FACTOR);
+
+    sense_data.iout = (float32_t)((int32_t)
+            SDFM_getFilterData(DAB_IOUT_SDFM_BASE,
+                               SDFM_FILTER_1)*DAB_SDFM_PU_SCALE_FACTOR1);
+    sense_data.ipri = DAB_I_ADC_FACTOR_A *
+            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER1);
+    sense_data.isec = DAB_I_ADC_FACTOR_A *
+            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER2);
+}
+#pragma FUNC_ALWAYS_INLINE(DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA)
+static inline phasecal DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA(float32_t DAB_pwmPhaseShiftPrimSec_pu)
+{
+    phasecal HR_Phase_Result;
+    float32_t DAB_pwmPhaseShift_P1_S1_ns;
+    int32_t DAB_pwmPhaseShift_P1_S1_ticks;
+    //
+    // first the phase shift in pu is converter to ns
+    // this is done for better debug and user friendliness
+    //
+    // 预计算：1.0 / (DAB_pwmFrequency_Hz * ONE_NANO_SEC)
+    const float32_t DAB_PHASE_TO_NS_SCALE = 1.0f / (DAB_pwmFrequency_Hz * 1e-9f);
+    const float32_t NS_TO_TICKS_SCALE = DAB_PWMSYSCLOCK_FREQ_HZ * 1e-9f * 256.0f;
+    DAB_pwmPhaseShift_P1_S1_ns = DAB_pwmPhaseShiftPrimSec_pu * DAB_PHASE_TO_NS_SCALE;
+
+    //
+    // next this ns is simply converted to ticks
+    //
+    DAB_pwmPhaseShift_P1_S1_ticks =
+            (int32_t)(DAB_pwmPhaseShift_P1_S1_ns * NS_TO_TICKS_SCALE) - 512;
+    // due to the delay line implementation depending on whether it is
+    // a phase delay or an advance we need to adjust the
+    // HR phase shift ticks calculations
+    //
+    if(DAB_pwmPhaseShift_P1_S1_ticks >= 0)
+    {
+        HR_Phase_Result.direction = EPWM_COUNT_MODE_DOWN_AFTER_SYNC;
+
+        //
+        // DAB_pwmPhaseShiftPrimSec_ticks has the correct value already
+        //
+    }
+    else
+    {
+        HR_Phase_Result.direction =  EPWM_COUNT_MODE_UP_AFTER_SYNC;
+        // 合并操作：取反+1（补码）并调整高低位
+        DAB_pwmPhaseShift_P1_S1_ticks =
+            ((~DAB_pwmPhaseShift_P1_S1_ticks + 1) + 0x100) & 0xFFFF00 |  // 高位加0x100并掩码
+            (0xFF - (DAB_pwmPhaseShift_P1_S1_ticks & 0xFF));             // 低8位取补
+
+    }
+    HR_Phase_Result.ticks = DAB_pwmPhaseShift_P1_S1_ticks;
+    return HR_Phase_Result;
+
+}
+
+//
+// Loop1 control task defined in a shared file so that can be used both
+// by CPU and CLA in order avoid code duplication
+//
+static inline void loop1_task(void)
+{
+    //
+    // 读取PPB模块的输出值
+    //
+    //
+//    sense_data.loop1 = DAB_HAL_readVout_V();
+//    sense_data.loop2 = DAB_HAL_readVin_V();
+//
+    DAB_readSensedSignals();
+// Run the parallel form PI controller
+//
+
+    control_out_data.loop1 = DCL_runPI_L1(&pi_loop1, ref_data.loop1,
+                                          sense_data.vout);
+    HR_Phase = DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA(control_out_data.loop1);
+}
+
 __attribute__((interrupt)) void Cla1Task1(void)
 {
-
+    setProfilingGPIO();
+    loop1_task();
+//    __mdebugstop();
+    resetProfilingGPIO();
 }

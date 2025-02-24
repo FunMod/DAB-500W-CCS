@@ -141,6 +141,38 @@ extern "C"
 #define GPIO_PIN_EPWM5_B 9
 #define myEPWM4_EPWMB_GPIO 9
 #define myEPWM4_EPWMB_PIN_CONFIG GPIO_9_EPWM5_B
+
+//
+// EPWM8 -> myEPWM5 Pinmux
+//
+//
+// EPWM8_A - GPIO Settings
+//
+#define GPIO_PIN_EPWM8_A 14
+#define myEPWM5_EPWMA_GPIO 14
+#define myEPWM5_EPWMA_PIN_CONFIG GPIO_14_EPWM8_A
+//
+// EPWM8_B - GPIO Settings
+//
+#define GPIO_PIN_EPWM8_B 15
+#define myEPWM5_EPWMB_GPIO 15
+#define myEPWM5_EPWMB_PIN_CONFIG GPIO_15_EPWM8_B
+
+//
+// EPWM6 -> myEPWM6 Pinmux
+//
+//
+// EPWM6_A - GPIO Settings
+//
+#define GPIO_PIN_EPWM6_A 10
+#define myEPWM6_EPWMA_GPIO 10
+#define myEPWM6_EPWMA_PIN_CONFIG GPIO_10_EPWM6_A
+//
+// EPWM6_B - GPIO Settings
+//
+#define GPIO_PIN_EPWM6_B 11
+#define myEPWM6_EPWMB_GPIO 11
+#define myEPWM6_EPWMB_PIN_CONFIG GPIO_11_EPWM6_B
 //
 // GPIO31 - GPIO Settings
 //
@@ -148,41 +180,65 @@ extern "C"
 //
 // GPIO41 - GPIO Settings
 //
-#define REFGEN_IO_GPIO_PIN_CONFIG GPIO_41_GPIO41
+#define TEST_IO_GPIO_PIN_CONFIG GPIO_41_GPIO41
+//
+// GPIO47 - GPIO Settings
+//
+#define TEST_IO1_GPIO_PIN_CONFIG GPIO_47_GPIO47
+//
+// GPIO59 - GPIO Settings
+//
+#define TEST_IO2_GPIO_PIN_CONFIG GPIO_59_GPIO59
 
 //
-// SD1 -> mySDFM0 Pinmux
+// SD1 -> DAB_IIN_SDFM Pinmux
 //
 //
 // SD1_C1 - GPIO Settings
 //
 #define GPIO_PIN_SD1_C1 49
-#define mySDFM0_SDC1_GPIO 49
-#define mySDFM0_SDC1_PIN_CONFIG GPIO_49_SD1_C1
+#define DAB_IIN_SDFM_SDC1_GPIO 49
+#define DAB_IIN_SDFM_SDC1_PIN_CONFIG GPIO_49_SD1_C1
 //
 // SD1_D1 - GPIO Settings
 //
 #define GPIO_PIN_SD1_D1 48
-#define mySDFM0_SDD1_GPIO 48
-#define mySDFM0_SDD1_PIN_CONFIG GPIO_48_SD1_D1
+#define DAB_IIN_SDFM_SDD1_GPIO 48
+#define DAB_IIN_SDFM_SDD1_PIN_CONFIG GPIO_48_SD1_D1
 //
 // SD1_D2 - GPIO Settings
 //
 #define GPIO_PIN_SD1_D2 50
-#define mySDFM0_SDD2_GPIO 50
-#define mySDFM0_SDD2_PIN_CONFIG GPIO_50_SD1_D2
+#define DAB_IIN_SDFM_SDD2_GPIO 50
+#define DAB_IIN_SDFM_SDD2_PIN_CONFIG GPIO_50_SD1_D2
 //
 // SD1_D3 - GPIO Settings
 //
 #define GPIO_PIN_SD1_D3 52
-#define mySDFM0_SDD3_GPIO 52
-#define mySDFM0_SDD3_PIN_CONFIG GPIO_52_SD1_D3
+#define DAB_IIN_SDFM_SDD3_GPIO 52
+#define DAB_IIN_SDFM_SDD3_PIN_CONFIG GPIO_52_SD1_D3
 //
 // SD1_D4 - GPIO Settings
 //
 #define GPIO_PIN_SD1_D4 54
-#define mySDFM0_SDD4_GPIO 54
-#define mySDFM0_SDD4_PIN_CONFIG GPIO_54_SD1_D4
+#define DAB_IIN_SDFM_SDD4_GPIO 54
+#define DAB_IIN_SDFM_SDD4_PIN_CONFIG GPIO_54_SD1_D4
+
+//
+// SD2 -> DAB_IOUT_SDFM Pinmux
+//
+//
+// SD2_C1 - GPIO Settings
+//
+#define GPIO_PIN_SD2_C1 57
+#define DAB_IOUT_SDFM_SDC1_GPIO 57
+#define DAB_IOUT_SDFM_SDC1_PIN_CONFIG GPIO_57_SD2_C1
+//
+// SD2_D1 - GPIO Settings
+//
+#define GPIO_PIN_SD2_D1 56
+#define DAB_IOUT_SDFM_SDD1_GPIO 56
+#define DAB_IOUT_SDFM_SDD1_PIN_CONFIG GPIO_56_SD2_D1
 
 //*****************************************************************************
 //
@@ -194,9 +250,36 @@ extern "C"
 #define myADC0_SOC0 ADC_SOC_NUMBER0
 #define myADC0_FORCE_SOC0 ADC_FORCE_SOC0
 #define myADC0_SAMPLE_WINDOW_SOC0 75
-#define myADC0_TRIGGER_SOURCE_SOC0 ADC_TRIGGER_EPWM3_SOCA
+#define myADC0_TRIGGER_SOURCE_SOC0 ADC_TRIGGER_EPWM1_SOCA
 #define myADC0_CHANNEL_SOC0 ADC_CH_ADCIN2
+#define myADC0_SOC1 ADC_SOC_NUMBER1
+#define myADC0_FORCE_SOC1 ADC_FORCE_SOC1
+#define myADC0_SAMPLE_WINDOW_SOC1 75
+#define myADC0_TRIGGER_SOURCE_SOC1 ADC_TRIGGER_EPWM1_SOCA
+#define myADC0_CHANNEL_SOC1 ADC_CH_ADCIN11
+#define myADC0_PPB1 ADC_PPB_NUMBER1
+#define myADC0_SOC_PPB1 ADC_SOC_NUMBER0
+#define myADC0_PPB2 ADC_PPB_NUMBER2
+#define myADC0_SOC_PPB2 ADC_SOC_NUMBER1
 void myADC0_init();
+
+#define myADC1_BASE ADCA_BASE
+#define myADC1_RESULT_BASE ADCARESULT_BASE
+#define myADC1_SOC0 ADC_SOC_NUMBER0
+#define myADC1_FORCE_SOC0 ADC_FORCE_SOC0
+#define myADC1_SAMPLE_WINDOW_SOC0 75
+#define myADC1_TRIGGER_SOURCE_SOC0 ADC_TRIGGER_EPWM1_SOCB
+#define myADC1_CHANNEL_SOC0 ADC_CH_ADCIN10
+#define myADC1_SOC1 ADC_SOC_NUMBER1
+#define myADC1_FORCE_SOC1 ADC_FORCE_SOC1
+#define myADC1_SAMPLE_WINDOW_SOC1 75
+#define myADC1_TRIGGER_SOURCE_SOC1 ADC_TRIGGER_EPWM1_SOCB
+#define myADC1_CHANNEL_SOC1 ADC_CH_ADCIN6
+#define myADC1_PPB1 ADC_PPB_NUMBER1
+#define myADC1_SOC_PPB1 ADC_SOC_NUMBER0
+#define myADC1_PPB2 ADC_PPB_NUMBER2
+#define myADC1_SOC_PPB2 ADC_SOC_NUMBER1
+void myADC1_init();
 
 
 //*****************************************************************************
@@ -243,7 +326,7 @@ void myCPUTIMER1_init();
 #define myEPWM0_CMPA 300
 #define myEPWM0_CMPB 300
 #define myEPWM0_CMPC 150
-#define myEPWM0_CMPD 0
+#define myEPWM0_CMPD 300
 #define myEPWM0_DBRED 12
 #define myEPWM0_DBFED 12
 #define myEPWM0_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
@@ -301,6 +384,32 @@ void myCPUTIMER1_init();
 #define myEPWM4_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM4_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM4_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define myEPWM5_BASE EPWM8_BASE
+#define myEPWM5_TBPRD 1200
+#define myEPWM5_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define myEPWM5_TBPHS 0
+#define myEPWM5_CMPA 600
+#define myEPWM5_CMPB 0
+#define myEPWM5_CMPC 0
+#define myEPWM5_CMPD 0
+#define myEPWM5_DBRED 0
+#define myEPWM5_DBFED 0
+#define myEPWM5_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define myEPWM5_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define myEPWM5_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPA
+#define myEPWM6_BASE EPWM6_BASE
+#define myEPWM6_TBPRD 3
+#define myEPWM6_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define myEPWM6_TBPHS 1
+#define myEPWM6_CMPA 3
+#define myEPWM6_CMPB 3
+#define myEPWM6_CMPC 0
+#define myEPWM6_CMPD 0
+#define myEPWM6_DBRED 0
+#define myEPWM6_DBFED 0
+#define myEPWM6_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define myEPWM6_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define myEPWM6_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 
 //*****************************************************************************
 //
@@ -309,8 +418,12 @@ void myCPUTIMER1_init();
 //*****************************************************************************
 #define myGPIO0 31
 void myGPIO0_init();
-#define REFGEN_IO 41
-void REFGEN_IO_init();
+#define TEST_IO 41
+void TEST_IO_init();
+#define TEST_IO1 47
+void TEST_IO1_init();
+#define TEST_IO2 59
+void TEST_IO2_init();
 
 //*****************************************************************************
 //
@@ -324,17 +437,11 @@ void REFGEN_IO_init();
 #define INT_myCLA01_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP11
 extern __interrupt void cla1Isr1(void);
 
-// Interrupt Settings for INT_myADC0_1
+// Interrupt Settings for INT_myEPWM5
 // ISR need to be defined for the registered interrupts
-#define INT_myADC0_1 INT_ADCB1
-#define INT_myADC0_1_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void INT_myADC0_1_ISR(void);
-
-// Interrupt Settings for INT_mySDFM0_DR1
-// ISR need to be defined for the registered interrupts
-#define INT_mySDFM0_DR1 INT_SDFM1DR1
-#define INT_mySDFM0_DR1_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP5
-extern __interrupt void INT_mySDFM0_DR1_ISR(void);
+#define INT_myEPWM5 INT_EPWM8
+#define INT_myEPWM5_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
+extern __interrupt void INT_myEPWM5_ISR(void);
 
 //*****************************************************************************
 //
@@ -350,8 +457,10 @@ extern __interrupt void INT_mySDFM0_DR1_ISR(void);
 #define SDFM_HTLZ_ENABLE  0x8000 //High Threshold (Z) enabled
 #define SDFM_HTLZ_DISABLE 0x0000 //High Threshold (Z) disabled
  
-#define mySDFM0_BASE SDFM1_BASE
-void    mySDFM0_init(void);
+#define DAB_IIN_SDFM_BASE SDFM1_BASE
+void    DAB_IIN_SDFM_init(void);
+#define DAB_IOUT_SDFM_BASE SDFM2_BASE
+void    DAB_IOUT_SDFM_init(void);
 
 //*****************************************************************************
 //

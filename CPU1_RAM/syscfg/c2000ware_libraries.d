@@ -3,7 +3,7 @@
 syscfg/c2000ware_libraries.obj: syscfg/c2000ware_libraries.c
 syscfg/c2000ware_libraries.obj: syscfg/c2000ware_libraries.h
 syscfg/c2000ware_libraries.obj: syscfg/board.h
-syscfg/c2000ware_libraries.obj: F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h
+syscfg/c2000ware_libraries.obj: D:/ti/workspace_v12/DAB_500W/device/driverlib.h
 syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h
 syscfg/c2000ware_libraries.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h
 syscfg/c2000ware_libraries.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
@@ -125,7 +125,7 @@ syscfg/c2000ware_libraries.h:
 
 syscfg/board.h:
 
-F:/BaiduNetdiskDownload/workspace/DAB_500W/device/driverlib.h:
+D:/ti/workspace_v12/DAB_500W/device/driverlib.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h:
 
