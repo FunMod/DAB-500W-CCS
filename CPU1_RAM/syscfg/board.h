@@ -127,52 +127,68 @@ extern "C"
 #define myEPWM3_EPWMB_PIN_CONFIG GPIO_7_EPWM4_B
 
 //
-// EPWM5 -> myEPWM4 Pinmux
+// EPWM5 -> SDFM1_CLK Pinmux
 //
 //
 // EPWM5_A - GPIO Settings
 //
 #define GPIO_PIN_EPWM5_A 8
-#define myEPWM4_EPWMA_GPIO 8
-#define myEPWM4_EPWMA_PIN_CONFIG GPIO_8_EPWM5_A
+#define SDFM1_CLK_EPWMA_GPIO 8
+#define SDFM1_CLK_EPWMA_PIN_CONFIG GPIO_8_EPWM5_A
 //
 // EPWM5_B - GPIO Settings
 //
 #define GPIO_PIN_EPWM5_B 9
-#define myEPWM4_EPWMB_GPIO 9
-#define myEPWM4_EPWMB_PIN_CONFIG GPIO_9_EPWM5_B
+#define SDFM1_CLK_EPWMB_GPIO 9
+#define SDFM1_CLK_EPWMB_PIN_CONFIG GPIO_9_EPWM5_B
 
 //
-// EPWM8 -> myEPWM5 Pinmux
+// EPWM8 -> Current_Balancing Pinmux
 //
 //
 // EPWM8_A - GPIO Settings
 //
 #define GPIO_PIN_EPWM8_A 14
-#define myEPWM5_EPWMA_GPIO 14
-#define myEPWM5_EPWMA_PIN_CONFIG GPIO_14_EPWM8_A
+#define Current_Balancing_EPWMA_GPIO 14
+#define Current_Balancing_EPWMA_PIN_CONFIG GPIO_14_EPWM8_A
 //
 // EPWM8_B - GPIO Settings
 //
 #define GPIO_PIN_EPWM8_B 15
-#define myEPWM5_EPWMB_GPIO 15
-#define myEPWM5_EPWMB_PIN_CONFIG GPIO_15_EPWM8_B
+#define Current_Balancing_EPWMB_GPIO 15
+#define Current_Balancing_EPWMB_PIN_CONFIG GPIO_15_EPWM8_B
 
 //
-// EPWM6 -> myEPWM6 Pinmux
+// EPWM6 -> SDFM2_CLK Pinmux
 //
 //
 // EPWM6_A - GPIO Settings
 //
 #define GPIO_PIN_EPWM6_A 10
-#define myEPWM6_EPWMA_GPIO 10
-#define myEPWM6_EPWMA_PIN_CONFIG GPIO_10_EPWM6_A
+#define SDFM2_CLK_EPWMA_GPIO 10
+#define SDFM2_CLK_EPWMA_PIN_CONFIG GPIO_10_EPWM6_A
 //
 // EPWM6_B - GPIO Settings
 //
 #define GPIO_PIN_EPWM6_B 11
-#define myEPWM6_EPWMB_GPIO 11
-#define myEPWM6_EPWMB_PIN_CONFIG GPIO_11_EPWM6_B
+#define SDFM2_CLK_EPWMB_GPIO 11
+#define SDFM2_CLK_EPWMB_PIN_CONFIG GPIO_11_EPWM6_B
+
+//
+// EPWM7 -> Refgen_Task Pinmux
+//
+//
+// EPWM7_A - GPIO Settings
+//
+#define GPIO_PIN_EPWM7_A 12
+#define Refgen_Task_EPWMA_GPIO 12
+#define Refgen_Task_EPWMA_PIN_CONFIG GPIO_12_EPWM7_A
+//
+// EPWM7_B - GPIO Settings
+//
+#define GPIO_PIN_EPWM7_B 13
+#define Refgen_Task_EPWMB_GPIO 13
+#define Refgen_Task_EPWMB_PIN_CONFIG GPIO_13_EPWM7_B
 //
 // GPIO31 - GPIO Settings
 //
@@ -189,6 +205,14 @@ extern "C"
 // GPIO59 - GPIO Settings
 //
 #define TEST_IO2_GPIO_PIN_CONFIG GPIO_59_GPIO59
+//
+// GPIO32 - GPIO Settings
+//
+#define TEST_IO3_GPIO_PIN_CONFIG GPIO_32_GPIO32
+//
+// GPIO33 - GPIO Settings
+//
+#define TEST_IO4_GPIO_PIN_CONFIG GPIO_33_GPIO33
 
 //
 // SD1 -> DAB_IIN_SDFM Pinmux
@@ -268,17 +292,31 @@ void myADC0_init();
 #define myADC1_SOC0 ADC_SOC_NUMBER0
 #define myADC1_FORCE_SOC0 ADC_FORCE_SOC0
 #define myADC1_SAMPLE_WINDOW_SOC0 75
-#define myADC1_TRIGGER_SOURCE_SOC0 ADC_TRIGGER_EPWM1_SOCB
+#define myADC1_TRIGGER_SOURCE_SOC0 ADC_TRIGGER_EPWM8_SOCA
 #define myADC1_CHANNEL_SOC0 ADC_CH_ADCIN10
 #define myADC1_SOC1 ADC_SOC_NUMBER1
 #define myADC1_FORCE_SOC1 ADC_FORCE_SOC1
 #define myADC1_SAMPLE_WINDOW_SOC1 75
-#define myADC1_TRIGGER_SOURCE_SOC1 ADC_TRIGGER_EPWM1_SOCB
+#define myADC1_TRIGGER_SOURCE_SOC1 ADC_TRIGGER_EPWM8_SOCA
 #define myADC1_CHANNEL_SOC1 ADC_CH_ADCIN6
+#define myADC1_SOC2 ADC_SOC_NUMBER2
+#define myADC1_FORCE_SOC2 ADC_FORCE_SOC2
+#define myADC1_SAMPLE_WINDOW_SOC2 75
+#define myADC1_TRIGGER_SOURCE_SOC2 ADC_TRIGGER_EPWM8_SOCB
+#define myADC1_CHANNEL_SOC2 ADC_CH_ADCIN10
+#define myADC1_SOC3 ADC_SOC_NUMBER3
+#define myADC1_FORCE_SOC3 ADC_FORCE_SOC3
+#define myADC1_SAMPLE_WINDOW_SOC3 75
+#define myADC1_TRIGGER_SOURCE_SOC3 ADC_TRIGGER_EPWM8_SOCB
+#define myADC1_CHANNEL_SOC3 ADC_CH_ADCIN6
 #define myADC1_PPB1 ADC_PPB_NUMBER1
 #define myADC1_SOC_PPB1 ADC_SOC_NUMBER0
 #define myADC1_PPB2 ADC_PPB_NUMBER2
 #define myADC1_SOC_PPB2 ADC_SOC_NUMBER1
+#define myADC1_PPB3 ADC_PPB_NUMBER3
+#define myADC1_SOC_PPB3 ADC_SOC_NUMBER2
+#define myADC1_PPB4 ADC_PPB_NUMBER4
+#define myADC1_SOC_PPB4 ADC_SOC_NUMBER3
 void myADC1_init();
 
 
@@ -301,6 +339,7 @@ void myADC1_init();
 // and the main CPU can make use of them.
 //
 __attribute__((interrupt)) void Cla1Task1();
+__attribute__((interrupt)) void Cla1Task2();
 void myCLA0_init();
 
 
@@ -313,6 +352,8 @@ void myCLA0_init();
 void myCPUTIMER0_init();
 #define myCPUTIMER1_BASE CPUTIMER1_BASE
 void myCPUTIMER1_init();
+#define myCPUTIMER2_BASE CPUTIMER2_BASE
+void myCPUTIMER2_init();
 
 //*****************************************************************************
 //
@@ -335,7 +376,7 @@ void myCPUTIMER1_init();
 #define myEPWM1_BASE EPWM2_BASE
 #define myEPWM1_TBPRD 600
 #define myEPWM1_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM1_TBPHS 598
+#define myEPWM1_TBPHS 0
 #define myEPWM1_CMPA 300
 #define myEPWM1_CMPB 300
 #define myEPWM1_CMPC 150
@@ -371,45 +412,58 @@ void myCPUTIMER1_init();
 #define myEPWM3_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM3_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define myEPWM3_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
-#define myEPWM4_BASE EPWM5_BASE
-#define myEPWM4_TBPRD 3
-#define myEPWM4_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM4_TBPHS 0
-#define myEPWM4_CMPA 3
-#define myEPWM4_CMPB 3
-#define myEPWM4_CMPC 0
-#define myEPWM4_CMPD 0
-#define myEPWM4_DBRED 0
-#define myEPWM4_DBFED 0
-#define myEPWM4_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define myEPWM4_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define myEPWM4_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
-#define myEPWM5_BASE EPWM8_BASE
-#define myEPWM5_TBPRD 1200
-#define myEPWM5_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM5_TBPHS 0
-#define myEPWM5_CMPA 600
-#define myEPWM5_CMPB 0
-#define myEPWM5_CMPC 0
-#define myEPWM5_CMPD 0
-#define myEPWM5_DBRED 0
-#define myEPWM5_DBFED 0
-#define myEPWM5_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define myEPWM5_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define myEPWM5_INTERRUPT_SOURCE EPWM_INT_TBCTR_U_CMPA
-#define myEPWM6_BASE EPWM6_BASE
-#define myEPWM6_TBPRD 3
-#define myEPWM6_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
-#define myEPWM6_TBPHS 1
-#define myEPWM6_CMPA 3
-#define myEPWM6_CMPB 3
-#define myEPWM6_CMPC 0
-#define myEPWM6_CMPD 0
-#define myEPWM6_DBRED 0
-#define myEPWM6_DBFED 0
-#define myEPWM6_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define myEPWM6_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
-#define myEPWM6_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define SDFM1_CLK_BASE EPWM5_BASE
+#define SDFM1_CLK_TBPRD 3
+#define SDFM1_CLK_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define SDFM1_CLK_TBPHS 0
+#define SDFM1_CLK_CMPA 3
+#define SDFM1_CLK_CMPB 3
+#define SDFM1_CLK_CMPC 0
+#define SDFM1_CLK_CMPD 0
+#define SDFM1_CLK_DBRED 0
+#define SDFM1_CLK_DBFED 0
+#define SDFM1_CLK_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define SDFM1_CLK_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define SDFM1_CLK_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define Current_Balancing_BASE EPWM8_BASE
+#define Current_Balancing_TBPRD 600
+#define Current_Balancing_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define Current_Balancing_TBPHS 400
+#define Current_Balancing_CMPA 300
+#define Current_Balancing_CMPB 300
+#define Current_Balancing_CMPC 420
+#define Current_Balancing_CMPD 180
+#define Current_Balancing_DBRED 0
+#define Current_Balancing_DBFED 0
+#define Current_Balancing_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define Current_Balancing_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define Current_Balancing_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define SDFM2_CLK_BASE EPWM6_BASE
+#define SDFM2_CLK_TBPRD 3
+#define SDFM2_CLK_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define SDFM2_CLK_TBPHS 1
+#define SDFM2_CLK_CMPA 3
+#define SDFM2_CLK_CMPB 3
+#define SDFM2_CLK_CMPC 0
+#define SDFM2_CLK_CMPD 0
+#define SDFM2_CLK_DBRED 0
+#define SDFM2_CLK_DBFED 0
+#define SDFM2_CLK_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define SDFM2_CLK_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define SDFM2_CLK_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+#define Refgen_Task_BASE EPWM7_BASE
+#define Refgen_Task_TBPRD 1200
+#define Refgen_Task_COUNTER_MODE EPWM_COUNTER_MODE_UP_DOWN
+#define Refgen_Task_TBPHS 750
+#define Refgen_Task_CMPA 0
+#define Refgen_Task_CMPB 0
+#define Refgen_Task_CMPC 0
+#define Refgen_Task_CMPD 0
+#define Refgen_Task_DBRED 0
+#define Refgen_Task_DBFED 0
+#define Refgen_Task_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define Refgen_Task_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
+#define Refgen_Task_INTERRUPT_SOURCE EPWM_INT_TBCTR_ZERO
 
 //*****************************************************************************
 //
@@ -424,6 +478,10 @@ void TEST_IO_init();
 void TEST_IO1_init();
 #define TEST_IO2 59
 void TEST_IO2_init();
+#define TEST_IO3 32
+void TEST_IO3_init();
+#define TEST_IO4 33
+void TEST_IO4_init();
 
 //*****************************************************************************
 //
@@ -437,11 +495,11 @@ void TEST_IO2_init();
 #define INT_myCLA01_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP11
 extern __interrupt void cla1Isr1(void);
 
-// Interrupt Settings for INT_myEPWM5
+// Interrupt Settings for INT_Refgen_Task
 // ISR need to be defined for the registered interrupts
-#define INT_myEPWM5 INT_EPWM8
-#define INT_myEPWM5_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
-extern __interrupt void INT_myEPWM5_ISR(void);
+#define INT_Refgen_Task INT_EPWM7
+#define INT_Refgen_Task_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP3
+extern __interrupt void INT_Refgen_Task_ISR(void);
 
 //*****************************************************************************
 //

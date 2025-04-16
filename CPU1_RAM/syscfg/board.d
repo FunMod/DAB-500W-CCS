@@ -2,7 +2,7 @@
 
 syscfg/board.obj: syscfg/board.c
 syscfg/board.obj: syscfg/board.h
-syscfg/board.obj: D:/ti/workspace_v12/DAB_500W/device/driverlib.h
+syscfg/board.obj: D:/ti/workspace/DAB_500W/device/driverlib.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h
 syscfg/board.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h
 syscfg/board.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
@@ -112,7 +112,7 @@ syscfg/board.c:
 
 syscfg/board.h:
 
-D:/ti/workspace_v12/DAB_500W/device/driverlib.h:
+D:/ti/workspace/DAB_500W/device/driverlib.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h:
 

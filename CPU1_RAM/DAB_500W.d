@@ -2,7 +2,7 @@
 
 DAB_500W.obj: ../DAB_500W.c
 DAB_500W.obj: ../DAB_500W.h
-DAB_500W.obj: D:/ti/workspace_v12/DAB_500W/device/driverlib.h
+DAB_500W.obj: D:/ti/workspace/DAB_500W/device/driverlib.h
 DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h
 DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/adc.h
 DAB_500W.obj: D:/ti/ccs1281/ccs/tools/compiler/ti-cgt-c2000_22.6.1.LTS/include/stdbool.h
@@ -105,7 +105,7 @@ DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/spi.h
 DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_spi.h
 DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h
 DAB_500W.obj: D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h
-DAB_500W.obj: D:/ti/workspace_v12/DAB_500W/device/device.h
+DAB_500W.obj: D:/ti/workspace/DAB_500W/device/device.h
 DAB_500W.obj: syscfg/board.h
 DAB_500W.obj: syscfg/device.h
 DAB_500W.obj: syscfg/c2000ware_libraries.h
@@ -127,7 +127,7 @@ DAB_500W.obj: ../DAB_500W_settings.h
 
 ../DAB_500W.h:
 
-D:/ti/workspace_v12/DAB_500W/device/driverlib.h:
+D:/ti/workspace/DAB_500W/device/driverlib.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/inc/hw_memmap.h:
 
@@ -333,7 +333,7 @@ D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/version.h:
 
 D:/ti/c2000/C2000Ware_5_04_00_00/driverlib/f28003x/driverlib/driver_inclusive_terminology_mapping.h:
 
-D:/ti/workspace_v12/DAB_500W/device/device.h:
+D:/ti/workspace/DAB_500W/device/device.h:
 
 syscfg/board.h:
 

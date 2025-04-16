@@ -20,10 +20,10 @@ static inline void DAB_readSensedSignals()
     sense_data.iout = (float32_t)((int32_t)
             SDFM_getFilterData(DAB_IOUT_SDFM_BASE,
                                SDFM_FILTER_1)*DAB_SDFM_PU_SCALE_FACTOR1);
-    sense_data.ipri = DAB_I_ADC_FACTOR_A *
-            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER1);
-    sense_data.isec = DAB_I_ADC_FACTOR_A *
-            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER2);
+//    sense_data.ipri = DAB_I_ADC_FACTOR_A *
+//            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER1);
+//    sense_data.isec = DAB_I_ADC_FACTOR_A *
+//            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER2);
 }
 #pragma FUNC_ALWAYS_INLINE(DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA)
 static inline phasecal DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA(float32_t DAB_pwmPhaseShiftPrimSec_pu)
@@ -81,16 +81,20 @@ static inline void loop1_task(void)
     // 读取PPB模块的输出值
     //
     //
-//    sense_data.loop1 = DAB_HAL_readVout_V();
-//    sense_data.loop2 = DAB_HAL_readVin_V();
-//
     DAB_readSensedSignals();
 // Run the parallel form PI controller
 //
-
+#ifdef VOLTAGE_MODE
     control_out_data.loop1 = DCL_runPI_L1(&pi_loop1, ref_data.loop1,
                                           sense_data.vout);
+    HR_Phase = DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA(control_out_data.loop1 + inject_value);
+
+#else
+    control_out_data.loop1 = DCL_runPI_L1(&pi_loop1, ref_data.loop1,
+                                          sense_data.iout);
     HR_Phase = DAB_calculatePWMDutyPeriodPhaseShiftTicks_CLA(control_out_data.loop1);
+
+#endif
 }
 
 __attribute__((interrupt)) void Cla1Task1(void)
@@ -99,4 +103,22 @@ __attribute__((interrupt)) void Cla1Task1(void)
     loop1_task();
 //    __mdebugstop();
     resetProfilingGPIO();
+}
+
+__attribute__((interrupt)) void Cla1Task2(void)
+{
+    setProfilingGPIO5();
+    sense_data.ipri = DAB_I_ADC_FACTOR_A *
+            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER1);
+    sense_data.isec = DAB_I_ADC_FACTOR_A *
+            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER2);
+    sense_data.ipri2 = DAB_I_ADC_FACTOR_A *
+            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER3);
+    sense_data.isec2 = DAB_I_ADC_FACTOR_A *
+            ADC_readPPBResult(ADCARESULT_BASE, ADC_PPB_NUMBER4);
+    sense_data.ipriavg = sense_data.ipri + sense_data.ipri2;
+    sense_data.isecavg = sense_data.isec + sense_data.isec2;
+    // Clear interrupt flags.
+    ADC_clearInterruptStatus(myADC1_BASE, ADC_INT_NUMBER1);
+    resetProfilingGPIO5();
 }

@@ -26,6 +26,10 @@
 #define DAB_VOUT_ADC_FACTOR_V   ((float32_t)1.0 / 9.9675f)
 #define DAB_VIN_ADC_FACTOR_V   ((float32_t)1.0 / 20.0f)
 #define DAB_I_ADC_FACTOR_A   ((float32_t)0.0121f)
+
+#define VOLTAGE_MODE 1
+//#define PHASE_INJECT_MODE 1
+#define DUTY_INJECT_MODE 1
 //
 // Structure definitions
 //
@@ -47,7 +51,11 @@ typedef struct {
     float32_t iin;
     float32_t iout;
     float32_t ipri;
+    float32_t ipri2;
     float32_t isec;
+    float32_t isec2;
+    float32_t ipriavg;
+    float32_t isecavg;
 }sensed;
 
 typedef struct {
@@ -63,6 +71,7 @@ extern volatile sensed sense_data;
 extern volatile control_out control_out_data;
 extern DCL_PI_CLA pi_loop1;
 extern volatile phasecal HR_Phase;
+extern volatile float inject_value; // ÈÅ¶¯Êý¾Ý
 //
 // setProfilingGPIO
 //
@@ -86,6 +95,29 @@ static inline void resetProfilingGPIO(void)
     #pragma diag_warning = 770
     #pragma diag_warning = 173
 }
+//
+// setProfilingGPIO
+//
+static inline void setProfilingGPIO5(void)
+{
+    #pragma diag_suppress = 770
+    #pragma diag_suppress = 173
+    HWREG(GPIODATA_BASE  + GPIO_O_GPBSET ) = GPIO_PROFILING5_SET;
+    #pragma diag_warning = 770
+    #pragma diag_warning = 173
+}
+
+//
+// resetProfilingGPIO
+//
+static inline void resetProfilingGPIO5(void)
+{
+    #pragma diag_suppress = 770
+    #pragma diag_suppress = 173
+    HWREG(GPIODATA_BASE  + GPIO_O_GPBCLEAR ) = GPIO_PROFILING5_CLEAR;
+    #pragma diag_warning = 770
+    #pragma diag_warning = 173
+}
 #pragma FUNC_ALWAYS_INLINE(DAB_HAL_updatePWMPhaseShift)
 static inline void DAB_HAL_updatePWMPhaseShift(phasecal HR_Phase_Result)
 {
@@ -104,7 +136,7 @@ static inline void DAB_HAL_updatePWMPhaseShift(phasecal HR_Phase_Result)
 }
 
 __attribute__((interrupt)) void Cla1Task1(void);
-
+__attribute__((interrupt)) void Cla1Task2(void);
 
 
 

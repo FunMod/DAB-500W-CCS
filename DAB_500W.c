@@ -57,6 +57,7 @@
 // Globals
 //
 volatile float32_t dutyFine=0.0;
+volatile float32_t dutyFine1=0.0;
 volatile float32_t previousDutyFine=0.0;
 
 
@@ -65,23 +66,31 @@ volatile uint32_t HR_Phase_ticks;
 volatile uint16_t DAB_phaseSyncP1_S1CountDirection;
 
 //float32_t yk = (float32_t)53.5;
-uint16_t  myADC0Results;
-float32_t  Vout;
+//uint16_t  myADC0Results;
+//float32_t  Vout;
 float32_t Kp_UP = 0.0f;
 float32_t Ki_UP = 0.0f;
-int16_t filter1Result;
+//int16_t filter1Result;
 int16_t soft_start_state = 0;
+#ifdef VOLTAGE_MODE
 float32_t soft_start_value = 54.0f;
+float32_t ref_value = 108.0f;
+#else
+float32_t soft_start_value = 0.8f;
+float32_t ref_value = 1.6f;
+#endif
+
 //#pragma DATA_SECTION(sense_data, "cla1ToCpuMsgRAM")
 //#pragma DATA_SECTION(ref_data, "cpuToCla1MsgRAM")
 //#pragma DATA_SECTION(control_out_data, "cla1ToCpuMsgRAM")
 
 #pragma SET_DATA_SECTION("cla_shared")
 volatile reference ref_data = {0.0,0.0}; // Target digital values for loops
-volatile sensed sense_data = {0,0,0,0,0,0};   // ADC sensed data for both loops
+volatile sensed sense_data = {0,0,0,0,0,0,0,0,0,0};   // ADC sensed data for both loops
 volatile control_out control_out_data = {0.0,0.0}; // Outputs of controllers
 DCL_PI_CLA pi_loop1 = PI_CLA_DEFAULTS;  // Controller definition
 volatile phasecal HR_Phase;
+
 #pragma SET_DATA_SECTION()   // Reset section to default
 //
 // Variable declarations for state machine
@@ -116,7 +125,7 @@ void B3(void);  //state B3
 //
 // Function Prototypes
 //
-void setEPWMDutyCycle(float dutyCyclePercentage0, float dutyCyclePercentage1);
+//void setEPWMDutyCycle(float dutyCyclePercentage0, float dutyCyclePercentage1);
 void soft_start(void);
 void controller_initialize(void);
 //uint32_t DAB_calculatePWMDutyPeriodPhaseShiftTicks(float32_t DAB_pwmPhaseShiftPrimSec_pu);
@@ -187,7 +196,8 @@ void main(void)
 
         if (dutyFine != previousDutyFine)
         {
-            Phase_pu = dutyFine;
+//            Phase_pu = dutyFine;
+            setEPWMDutyCycle(dutyFine, dutyFine1);
 //            PI_CONTROLLER.sps->Kp = Kp_UP;
 //            PI_CONTROLLER.sps->Ki = Ki_UP;
 //            DCL_REQUEST_UPDATE(&PI_CONTROLLER);
@@ -198,19 +208,83 @@ void main(void)
     }
 }
 
-__interrupt void INT_myEPWM5_ISR(void)
+__interrupt void INT_Refgen_Task_ISR(void)
 {
-    EPWM_clearEventTriggerInterruptFlag(myEPWM5_BASE);
-    Interrupt_clearACKGroup(INT_myEPWM5_INTERRUPT_ACK_GROUP);
-
+    EPWM_clearEventTriggerInterruptFlag(Refgen_Task_BASE);
+    Interrupt_clearACKGroup(INT_Refgen_Task_INTERRUPT_ACK_GROUP);
     //使用driverlib库反转GPIO：2.4us, 1.425us, 4.8us;同样的功能使用寄存器形式反转IO：991.5ns, 841.5ns, 4.258us
     setProfilingGPIO3();
 
     DCL_runRefgen(&myREFGEN0);
     ref_data.loop1 = DCL_getRefgenPhaseA(&myREFGEN0);
+//    InjectTask();
+    // 每次中断调用增加计数器
+    if (DCL_getRefgenPhaseA(&myREFGEN0) == 54.0f && injectDisturbanceFlag == true){
+        counter++;
+#ifdef DUTY_INJECT_MODE
+        // 合并状态机逻辑，减少条件判断次数
+        if (currentState == STATE_0US) {
+            doActionAt0us();
+            if (counter >= 9) { // 180us = 9 * 20us (每个中断周期20us)
+                currentState = STATE_180US;
+//                counter = 0;
+            }
+        } else if (currentState == STATE_180US) {
+            doActionAt180us();
+            if (counter >= 21) { // 420us = 21 * 20us (每个中断周期20us)
+                currentState = STATE_600US;
+//                counter = 0;
+            }
+        } else if (currentState == STATE_600US) {
+            doActionAt600us();
+            if (counter >= 30) { // 600us = 30 * 20us (每个中断周期20us)
+                currentState = STATE_0US;
+                counter = 0;
+            }
+        }
+#endif
+#ifdef PHASE_INJECT_MODE
+        // 合并状态机逻辑，减少条件判断次数
+        if (counter == 1) {
+            // 0us时执行的动作
+//            doActionAt0us();
+            inject_value = 0.006;
+            currentState = STATE_0US;
+        } else if (counter == 13) {
+            // 250us = 13 * 20us (每个中断周期20us)
+            // 250us时执行的动作
+//            doActionAt250us();
+            inject_value = 0.002;
+            currentState = STATE_250US;
+        } else if (counter == 25) {
+            // 500us = 25 * 20us (每个中断周期20us)
+            // 500us时执行的动作
+//            doActionAt500us();
+            inject_value = -0.006;
+            currentState = STATE_500US;
+        } else if (counter == 38) {
+            // 750us = 38 * 20us (每个中断周期20us)
+            // 750us时执行的动作
+//            doActionAt750us();
+            inject_value = -0.002;
+            currentState = STATE_750US;
+            // 计数器重置为0
+            counter = 0;
+        }
+#endif
+        }
 
     resetProfilingGPIO3();
 }
+//__interrupt void INT_Current_Balancing_ISR(void){
+//    setProfilingGPIO4();
+//
+//
+//    resetProfilingGPIO4();
+//    EPWM_clearEventTriggerInterruptFlag(Current_Balancing_BASE);
+//    Interrupt_clearACKGroup(INT_Current_Balancing_INTERRUPT_ACK_GROUP);
+//
+//}
 __interrupt void cla1Isr1(void)
 {
     setProfilingGPIO2();
@@ -223,145 +297,14 @@ __interrupt void cla1Isr1(void)
     Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
     resetProfilingGPIO2();
 }
-#if 0
-//
-//ADC Interrupt 1 ISR
-//
-__interrupt void INT_myADC0_1_ISR(void)
-{
-    //
-    // Add the latest result to the buffer
-    //
-    myADC0Results = ADC_readResult(ADCBRESULT_BASE, ADC_SOC_NUMBER0);
-    Vout = __divf32(((float32_t)myADC0Results - 2039.5f), 9.9675f);
-//    if (Vout >= 20.0){
-    DCL_runRefgen(&myREFGEN0);
-    rk = DCL_getRefgenPhaseA(&myREFGEN0);
-    if (rk >= 10.0){GPIO_writePin(REFGEN_IO, 1);}else{GPIO_writePin(REFGEN_IO, 0);}
-    yk = Vout;
-//    uk = DCL_runPI_C1(&PI_CONTROLLER, rk, yk);
-//    HR_Phase_ticks = DAB_calculatePWMDutyPeriodPhaseShiftTicks(uk);
-//    HRPWM_setPhaseShift(myEPWM2_BASE, HR_Phase_ticks);
-//    HRPWM_setPhaseShift(myEPWM3_BASE, HR_Phase_ticks);
-//    HRPWM_setCountModeAfterSync(myEPWM2_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
-//    HRPWM_setCountModeAfterSync(myEPWM3_BASE, (EPWM_SyncCountMode)DAB_phaseSyncP1_S1CountDirection);
-//    }
-    //
-    // Clear the interrupt flag
-    //
-    ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
-    //
-    // Check if overflow has occurred
-    //
-    if(true == ADC_getInterruptOverflowStatus(myADC0_BASE, ADC_INT_NUMBER1))
-    {
-        ADC_clearInterruptOverflowStatus(myADC0_BASE, ADC_INT_NUMBER1);
-        ADC_clearInterruptStatus(myADC0_BASE, ADC_INT_NUMBER1);
-    }
 
-    //
-    // Acknowledge the interrupt
-    //
-    Interrupt_clearACKGroup(INT_myADC0_1_INTERRUPT_ACK_GROUP);
-}
-
-__interrupt void INT_mySDFM0_DR1_ISR(void)
-{
-
-    SDFM_setOutputDataFormat(SDFM1_BASE, SDFM_FILTER_1,
-                             SDFM_DATA_FORMAT_16_BIT);
-        //
-        // Read SDFM filter output
-        //
-
-        if(SDFM_getFIFOISRStatus(SDFM1_BASE, SDFM_FILTER_1) == 0x1U)
-        {
-            filter1Result =
-                         (int16_t)(SDFM_getFIFOData(SDFM1_BASE,
-                                                    SDFM_FILTER_1) >> 16U);
-
-        }
-        else if(SDFM_getNewFilterDataStatus(SDFM1_BASE, SDFM_FILTER_1) == 0x1U)
-        {
-            filter1Result =
-                   (int16_t)(SDFM_getFilterData(SDFM1_BASE, SDFM_FILTER_1) >> 16U);
-        }
-
-        //
-        // Clear SDFM flag register (SDIFLG)
-        //
-        SDFM_clearInterruptFlag(SDFM1_BASE, SDFM_MAIN_INTERRUPT_FLAG |
-                                SDFM_FILTER_1_FIFO_INTERRUPT_FLAG      |
-                                SDFM_FILTER_1_NEW_DATA_FLAG            |
-                                SDFM_FILTER_1_FIFO_OVERFLOW_FLAG);
-
-        //
-        // Acknowledge this interrupt to receive more interrupts from group 5
-        //
-        Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP5);
-}
-#endif
 void soft_start(void){
     float dutyCycle_Ramp = 0;
     //使用__divf32更高效
-    dutyCycle_Ramp = __divf32(DCL_getRefgenPhaseA(&myREFGEN0), 108.0);
+    dutyCycle_Ramp = __divf32(DCL_getRefgenPhaseA(&myREFGEN0), ref_value);
     setEPWMDutyCycle(dutyCycle_Ramp, dutyCycle_Ramp);
 }
-void setEPWMDutyCycle(float dutyCyclePercentage0, float dutyCyclePercentage1) {
-    uint16_t compareValue0;
-    uint16_t compareValue1;
 
-    // 确保占空比在0%到100%之间
-    if (dutyCyclePercentage0 < 0.0) dutyCyclePercentage0 = 0.0;
-    if (dutyCyclePercentage0 > 1.0) dutyCyclePercentage0 = 1.0;
-    if (dutyCyclePercentage1 < 0.0) dutyCyclePercentage1 = 0.0;
-    if (dutyCyclePercentage1 > 1.0) dutyCyclePercentage1 = 1.0;
-
-    // 计算新的CMPX值
-    compareValue0 = (uint16_t)(dutyCyclePercentage0 * 1200);
-    compareValue1 = (uint16_t)(dutyCyclePercentage1 * 1200);
-
-    // 设置CMPB/CMPA值，由于AQ模块限制型CMPA的动作后执行CMPB的动作，因此在设计0-100的占空比时需要有特殊的先后顺序考虑；
-    if (dutyCyclePercentage0 <= 0.25) {
-        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_A, 300);
-        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_B, 300 + compareValue0);
-//        EPWM_setCounterCompareValue(myEPWM1_BASE, EPWM_COUNTER_COMPARE_A, compareValue1);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
-
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
-    } else if (dutyCyclePercentage0 > 0.25 && dutyCyclePercentage0 <= 0.75){
-        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_B, 300);
-        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_A, 900 - compareValue0);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
-
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
-    }
-    else if (dutyCyclePercentage0 > 0.75) {
-        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_B, 300);
-        EPWM_setCounterCompareValue(myEPWM0_BASE, EPWM_COUNTER_COMPARE_A, compareValue0 - 900);
-//        EPWM_setCounterCompareValue(myEPWM1_BASE, EPWM_COUNTER_COMPARE_A, 1200-compareValue1);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
-        EPWM_setActionQualifierAction(myEPWM0_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
-
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
-        EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
-    }
-
-
-    // 触发global load
-    EPWM_setGlobalLoadOneShotLatch(myEPWM0_BASE);
-//    EPWM_setGlobalLoadOneShotLatch(myEPWM1_BASE);
-}
 //
 //  STATE-MACHINE SEQUENCING AND SYNCRONIZATION FOR SLOW BACKGROUND TASKS
 //
@@ -404,6 +347,7 @@ void B0(void)
 //
 void A1(void)
 {
+#ifdef VOLTAGE_MODE
     if (sense_data.vin > 10.0f && ref_data.loop1 ==0){
         soft_start_value = 54.0f;
         soft_start_state = 1;
@@ -411,6 +355,28 @@ void A1(void)
         soft_start_value = 0.0f;
         soft_start_state = 1;
     }
+#else
+    HRPWM_setPhaseShift(myEPWM2_BASE, 1023);
+    HRPWM_setPhaseShift(myEPWM3_BASE, 1023);
+    HRPWM_setCountModeAfterSync(myEPWM2_BASE, (EPWM_SyncCountMode)1);
+    HRPWM_setCountModeAfterSync(myEPWM3_BASE, (EPWM_SyncCountMode)1);
+    EPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+    HRPWM_enablePhaseShiftLoad(myEPWM2_BASE);
+    EPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+    HRPWM_enablePhaseShiftLoad(myEPWM3_BASE);
+    setEPWMDutyCycle(0.5f, 0.5f);
+    if (sense_data.vin > 10.0f && ref_data.loop1 ==0){
+//        soft_start_value = 0.8f;
+//        soft_start_state = 1;
+
+        DCL_setRefgenRamp(&myREFGEN0, 0.8f, 0.1f);
+    }else if (sense_data.vin < 10.0f && ref_data.loop1 == 0.8f){
+//        soft_start_value = 0.0f;
+//        soft_start_state = 1;
+        DCL_setRefgenRamp(&myREFGEN0, 0.0f, 0.1f);
+    }
+#endif
+
 
     if (soft_start_state == 1){
         HRPWM_setPhaseShift(myEPWM2_BASE, 1023);
@@ -441,7 +407,7 @@ void A2(void)
     //
 
     if (DCL_getRefgenPhaseA(&myREFGEN0) == soft_start_value){
-        soft_start();
+        soft_start();//最后一次运行
         soft_start_state = 0;
         A_Task_Ptr = &A1;
 
